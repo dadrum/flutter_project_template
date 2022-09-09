@@ -1,0 +1,1 @@
+flutter pub run dep_gen:generate -p lib/domain/environment -o di.dart -c Di
