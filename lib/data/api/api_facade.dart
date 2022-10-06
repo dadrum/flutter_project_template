@@ -66,8 +66,9 @@ class ApiFacade implements IApiFacade {
     required String login,
     required String password,
   }) async {
-    final _Response response =
-        await httpClient.request(RequestAuth(login: login, password: password));
+    final _Response response = await httpClient.request(
+      RequestAuth(login: login, password: password),
+    );
     return mapper!.mapTokensPair(
       TokensPairDto.fromJson(
         jsonDecode('${response?.data}') as _JsonObject,
@@ -79,8 +80,9 @@ class ApiFacade implements IApiFacade {
   // update tokens pair by refresh token
   @override
   Future<TokensPair> refreshTokens({required String refreshToken}) async {
-    final _Response response = await httpClient
-        .request(RequestRefreshTokens(refreshToken: refreshToken));
+    final _Response response = await httpClient.request(
+      RequestRefreshTokens(refreshToken: refreshToken),
+    );
     return mapper!.mapTokensPair(
       TokensPairDto.fromJson(
         jsonDecode('${response?.data}') as _JsonObject,

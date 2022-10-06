@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 
@@ -17,6 +18,7 @@ Future<void> main() async {
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
 
   final IAnalytics analytics = Analytics();
+  addExceptionsHandlers(analytics);
 
   // prepare environment
   final environment = await Environment.buildEnvironment(
@@ -36,6 +38,22 @@ Future<void> main() async {
                 )),
           ),
       (error, stack) => analytics.onError(error: error, stacktrace: stack));
+}
+
+// ---------------------------------------------------------------------------
+// ---------------------------------------------------------------------------
+// ---------------------------------------------------------------------------
+void addExceptionsHandlers(IAnalytics analytics) {
+  //Handle Flutter framework errors
+  FlutterError.onError = (details) {
+    FlutterError.presentError(details);
+    analytics.onError(error: details.exception, stacktrace: details.stack);
+  };
+  // A callback that is invoked when an unhandled error occurs in the root isolate.
+  PlatformDispatcher.instance.onError = (error, stack) {
+    analytics.onError(error: error, stacktrace: stack);
+    return true;
+  };
 }
 
 // ---------------------------------------------------------------------------
