@@ -1,10 +1,20 @@
+import '../../data/api/http_client/request_exception.dart';
 import '../interfaces/i_analytics.dart';
 
 class Analytics implements IAnalytics {
   @override
   Future<void> onError({required Object error, Object? stacktrace}) async {
     // TODO: implement onError
-    print(error);
+    if(error is RequestException) {
+      print(error);
+      print(error.requestPath);
+      print(error.requestMethod);
+      print(error.requestData);
+      print(error.httpStatusCode);
+      print(error.response);
+    } else {
+      print(error);
+    }
     print(stacktrace);
   }
 

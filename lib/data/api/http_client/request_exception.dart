@@ -5,7 +5,16 @@ class RequestException implements Exception {
   final int httpStatusCode;
   final Map<String, Object?>? response;
   final String? responseValues;
+  final String requestPath;
+  final Object? requestData;
+  final String requestMethod;
 
-  RequestException(
-      {required this.httpStatusCode, this.response, this.responseValues});
+  RequestException({
+    required this.httpStatusCode,
+    this.response,
+    this.responseValues,
+    required this.requestPath,
+    this.requestData,
+    required this.requestMethod,
+  });
 }

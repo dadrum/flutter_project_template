@@ -341,13 +341,15 @@ class DioClient {
         }
       }
       Error.throwWithStackTrace(
-        RequestException(
-          httpStatusCode: dioError.response?.statusCode ?? 0,
-          response: responseBody,
-          responseValues: responseValues,
-        ),
-        stackTrace,
-      );
+          RequestException(
+            httpStatusCode: dioError.response?.statusCode ?? 0,
+            response: responseBody,
+            responseValues: responseValues,
+            requestPath: dioError.requestOptions.path,
+            requestData: dioError.requestOptions.data,
+            requestMethod: dioError.requestOptions.method,
+          ),
+          stackTrace);
     } on Object {
       rethrow;
     }
