@@ -1,7 +1,7 @@
 import '../../domain/interfaces/i_local_cache.dart';
 import '../../domain/models/tokens_pair.dart';
 
-class LocalCache implements ILocalCache{
+class LocalCache implements ILocalCache {
   // ---------------------------------------------------------------------------
   // Read tokens from cache
   @override

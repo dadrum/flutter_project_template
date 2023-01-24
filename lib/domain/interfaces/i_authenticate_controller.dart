@@ -10,7 +10,6 @@ enum AuthenticateStatus {
 typedef AuthenticateSubscription = StreamSubscription<AuthenticateStatus>;
 
 abstract class IAuthenticateController {
-
   AuthenticateStatus get lastKnownStatus;
 
   // on user authenticated
@@ -30,5 +29,4 @@ abstract class IAuthenticateController {
 
   // read tokens, saved to local cache
   Future<TokensPair?> getCachedTokens();
-
 }

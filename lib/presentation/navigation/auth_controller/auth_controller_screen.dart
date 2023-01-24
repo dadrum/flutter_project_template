@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../application/auth_controller/auth_controller_bloc.dart';
 import '../../../domain/environment/di.dart';
 import '../../../domain/interfaces/i_authenticate_controller.dart';
 import '../../screens/auth/auth_screen.dart';
 import '../../screens/workspace/workspace_screen.dart';
+import 'bloc/auth_controller_bloc.dart';
 
 class AuthControllerScreen extends StatelessWidget {
   const AuthControllerScreen({Key? key}) : super(key: key);

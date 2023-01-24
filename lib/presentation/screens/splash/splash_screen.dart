@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 
-import '../../../application/splash/splash_bloc.dart';
 import '../../../domain/environment/di.dart';
 import '../../navigation/top_route.dart';
+import 'bloc/splash_bloc.dart';
 
 class SplashScreen extends StatelessWidget {
   const SplashScreen({Key? key}) : super(key: key);

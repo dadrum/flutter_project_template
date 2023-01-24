@@ -1,24 +1,25 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
+// ignore_for_file: prefer_relative_imports, directives_ordering
+
 import 'package:flutter/widgets.dart';
 
 // **************************************************************************
 // DepGen code generator
 // **************************************************************************
 
-import 'package:app_template/application/splash/splash_bloc.dart';
-import 'package:app_template/application/auth_controller/auth_controller_bloc.dart';
 import 'package:app_template/domain/interfaces/i_api_facade.dart';
 import 'package:app_template/domain/interfaces/i_local_cache.dart';
 import 'package:app_template/domain/interfaces/i_authenticate_controller.dart';
+import 'package:app_template/presentation/navigation/auth_controller/bloc/auth_controller_bloc.dart';
+import 'package:app_template/presentation/screens/splash/bloc/splash_bloc.dart';
 
-  
 class Di extends InheritedWidget {
-  final Map<Type, Object> environment;
-
-  // ---------------------------------------------------------------------------
   const Di({Key? key, required Widget child, required this.environment})
       : super(key: key, child: child);
+
+  // ---------------------------------------------------------------------------
+  final Map<Type, Object> environment;
 
   // ---------------------------------------------------------------------------
   static Di of(BuildContext context) {
@@ -41,22 +42,16 @@ class Di extends InheritedWidget {
   // ---------------------------------------------------------------------------
   T? mayBeGet<T>() => environment.containsKey(T) ? environment[T] as T : null;
 
-  
+  // ---------------------------------------------------------------------------
+  AuthControllerBloc buildAuthControllerBloc() => AuthControllerBloc(
+        authenticateController: g<IAuthenticateController>(),
+        api: g<IApiFacade>(),
+      );
 
   // ---------------------------------------------------------------------------
-  SplashBloc buildSplashBloc(
-  ) => SplashBloc(
-      authenticateController: g<IAuthenticateController>(),
-      localCache: g<ILocalCache>(),
-      api: g<IApiFacade>(),
-    );
-
-
-  // ---------------------------------------------------------------------------
-  AuthControllerBloc buildAuthControllerBloc(
-  ) => AuthControllerBloc(
-      authenticateController: g<IAuthenticateController>(),
-      api: g<IApiFacade>(),
-    );
-
+  SplashBloc buildSplashBloc() => SplashBloc(
+        authenticateController: g<IAuthenticateController>(),
+        localCache: g<ILocalCache>(),
+        api: g<IApiFacade>(),
+      );
 }

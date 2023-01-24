@@ -1,10 +1,5 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_native_splash/flutter_native_splash.dart';
 
-import '../../../application/splash/splash_bloc.dart';
-import '../../../domain/environment/di.dart';
 import '../../navigation/top_route.dart';
 
 class OnBoardingScreen extends StatelessWidget {
@@ -14,15 +9,15 @@ class OnBoardingScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('onboard'),
-      ),
-      body: Center(child: TextButton(
-          child: Text('SKIP'),
-        onPressed: () => _onSkipOnBoarding(context),
-      ),)
-    );
-
+        appBar: AppBar(
+          title: const Text('onboard'),
+        ),
+        body: Center(
+          child: TextButton(
+            child: const Text('SKIP'),
+            onPressed: () => _onSkipOnBoarding(context),
+          ),
+        ));
   }
 
   // ---------------------------------------------------------------------------
