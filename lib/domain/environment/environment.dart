@@ -1,6 +1,6 @@
 import '../../data/api/api_facade.dart';
 import '../../data/local_cache/local_cache.dart';
-import '../authenticate_repository/authenticate_controller.dart';
+import '../repositories/authenticate_controller.dart';
 import '../interfaces/i_api_facade.dart';
 import '../interfaces/i_authenticate_controller.dart';
 import '../interfaces/i_local_cache.dart';

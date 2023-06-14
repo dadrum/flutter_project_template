@@ -2,7 +2,7 @@ import 'http_client.dart';
 
 // описание запроса к API
 abstract class IApiRequest {
-  IApiRequest({
+  const IApiRequest({
     required AvailableApiMethods methodType,
     required String url,
   })  : _initialUrl = url,

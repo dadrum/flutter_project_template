@@ -40,7 +40,7 @@ class SplashScreen extends StatelessWidget {
 
   // ---------------------------------------------------------------------------
   Future<void> initializeLocale(BuildContext context, String locale) async {
-    Locale setLocale = locale.toLowerCase().contains('ru')
+    final setLocale = locale.toLowerCase().contains('ru')
         ? const Locale('ru', 'RU')
         : const Locale('en', 'US');
 

@@ -11,6 +11,17 @@ import 'request_exception.dart';
 enum AvailableApiMethods { get, post, put, delete, patch }
 
 class DioClient {
+  DioClient({bool useLocaleSettings = false}) {
+    // настройка использования разных языков
+    if (useLocaleSettings) {
+      _localeSettings = englishLocaleSettings;
+    }
+    _useLocaleSettings = useLocaleSettings;
+
+    _initNewDioClient();
+  }
+
+  // ---------------------------------------------------------------------------
   Dio? _dio;
   late BaseOptions _dioOptions;
 
@@ -19,9 +30,8 @@ class DioClient {
 
   static const String englishLocaleSettings = 'en-US,en;q=0.9,ru-RU';
   static const String russianLocaleSettings = 'ru-RU,ru;q=0.9,en-US';
-  static const String _hostHttp = 'https';
   static const String _hostUrl = 'domain.ru/api_path';
-  static const String _baseUrl = '$_hostHttp://$_hostUrl';
+  static const String _baseUrl = 'https://$_hostUrl';
 
   // listener for authenticate events
   IAuthenticateController? authenticateController;
@@ -35,17 +45,6 @@ class DioClient {
   String? _localeSettings;
 
   // ---------------------------------------------------------------------------
-  DioClient({bool useLocaleSettings = false}) {
-    // настройка использования разных языков
-    if (useLocaleSettings) {
-      _localeSettings = englishLocaleSettings;
-    }
-    _useLocaleSettings = useLocaleSettings;
-
-    _initNewDioClient();
-  }
-
-  // ---------------------------------------------------------------------------
   // инициализация HTTP-клиента с заданными настройками
   // и заголовком
   void _initNewDioClient({String accessToken = '', String? refreshToken}) {
@@ -54,22 +53,22 @@ class DioClient {
     _refreshToken = refreshToken;
 
     // собираем данные для заголовка
-    final Map<String, Object?> _headers = {};
+    final Map<String, Object?> headers = {};
     // установка токена
     if (accessToken.isNotEmpty) {
-      _headers[HttpHeaders.authorizationHeader] =
+      headers[HttpHeaders.authorizationHeader] =
           _getTokenWithBearer(accessToken);
     }
     // установка выбранной локали
     if (_useLocaleSettings && (_localeSettings?.isNotEmpty ?? false)) {
-      _headers[HttpHeaders.acceptLanguageHeader] = _localeSettings;
+      headers[HttpHeaders.acceptLanguageHeader] = _localeSettings;
     }
 
     _dioOptions = BaseOptions(
       baseUrl: _baseUrl,
-      connectTimeout: 25000,
-      receiveTimeout: 25000,
-      headers: _headers,
+      connectTimeout: const Duration(milliseconds: 25000),
+      receiveTimeout: const Duration(milliseconds: 25000),
+      headers: headers,
     );
     _dio = Dio(_dioOptions);
 
@@ -101,7 +100,7 @@ class DioClient {
     }
     _useLocaleSettings = true;
 
-    Map<String, Object?> newHeader = _dioOptions.headers;
+    final newHeader = _dioOptions.headers;
     newHeader[HttpHeaders.acceptLanguageHeader] = _localeSettings;
 
     _updateNewDioWithHeader(newHeader);
@@ -117,7 +116,7 @@ class DioClient {
   }
 
   // ---------------------------------------------------------------------------
-  InterceptorsWrapper authErrorInterceptor() => InterceptorsWrapper(
+  QueuedInterceptorsWrapper authErrorInterceptor() => QueuedInterceptorsWrapper(
         onResponse: (response, handler) {
           // _continuous401ErrorsCounter = 0;
           return handler.next(response);
@@ -126,10 +125,6 @@ class DioClient {
           // если поступила ошибка аутентификации
           if (dioError.response?.statusCode == HttpStatus.unauthorized &&
               (_refreshToken?.isNotEmpty ?? false)) {
-            // блокируем клиент
-            //todo в 5 версии когда удалять dio.lock изменить поведение интерсептора
-            //ignore: deprecated_member_use
-            _dio!.lock();
             // запрашиваем новый токен
             final Map<String, Object?>? tokensPair = await _requestNewToken();
 
@@ -150,22 +145,13 @@ class DioClient {
                   receivedAccessToken, receivedRefreshToken);
             }
 
-            // разблокируем клиент
-            //todo в 5 версии когда удалят dio.unlock изменить поведение интерсептора
-            //ignore: deprecated_member_use
-            _dio!.unlock();
-
             // если токен был получен - пробуем повторить запрос
             // на котором поучили 401
             if (receivedAccessToken?.isNotEmpty ?? false) {
               try {
                 // only for VERIFY request - change token in DATA
-                Map<String, Object?>? originalRequestData =
+                final originalRequestData =
                     dioError.requestOptions.data as Map<String, Object?>?;
-                // if (originalRequestData != null &&
-                //     dioError.requestOptions.path.contains('auth/jwt/verify')) {
-                //   originalRequestData['token'] = receivedAccessToken;
-                // }
 
                 final Response<String> response =
                     await _dio!.request<String>(dioError.requestOptions.path,
@@ -176,7 +162,7 @@ class DioClient {
                         ));
                 handler.resolve(response);
                 return;
-              } on DioError catch (e) {
+              } on DioException catch (e) {
                 if ((e.response?.statusCode ?? 0) == HttpStatus.forbidden) {
                   clearTokens();
                   authenticateController?.onAuthenticateFailed();
@@ -201,17 +187,17 @@ class DioClient {
       return null;
     }
 
-    final Map<String, Object> _body = <String, Object>{
+    final Map<String, Object> body = <String, Object>{
       'refresh': _refreshToken!
     };
-    const String _url = '${_baseUrl}auth/token/refresh/';
+    const String url = '${_baseUrl}auth/token/refresh/';
 
     try {
       final Response<String> response =
-          await Dio(_dioOptions).post<String>(_url, data: _body);
+          await Dio(_dioOptions).post<String>(url, data: body);
 
       if (debugMode) {
-        _logger(_url, response, body: _body);
+        _logger(url, response, body: body);
       }
 
       if (response.statusCode == 200 && (response.data?.isNotEmpty ?? false)) {
@@ -299,7 +285,7 @@ class DioClient {
       }
 
       return response;
-    } on DioError catch (dioError, stackTrace) {
+    } on DioException catch (dioError, stackTrace) {
       if (debugMode) {
         _logger(url, dioError.response, body: request.body);
       }
@@ -308,7 +294,7 @@ class DioClient {
       String? responseValues;
       if (dioError.response?.data != null) {
         if ('${dioError.response?.data}'.isNotEmpty) {
-          Object? jsonDecoded = jsonDecode(dioError.response!.data as String);
+          final jsonDecoded = jsonDecode(dioError.response!.data as String);
           if (jsonDecoded is Map) {
             responseBody = jsonDecoded as Map<String, Object?>;
           } else if (jsonDecoded is Iterable) {

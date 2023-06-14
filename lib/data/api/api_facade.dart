@@ -15,16 +15,16 @@ typedef _Response = Response<Object?>?;
 typedef _JsonObject = Map<String, Object?>;
 
 class ApiFacade implements IApiFacade {
-  late DioClient httpClient;
-
-  @override
-  ApiDataMapper? mapper;
-
-  // ---------------------------------------------------------------------------
   ApiFacade({DioClient? customClient, ApiDataMapper? customMapper}) {
     httpClient = customClient ?? DioClient();
     mapper = customMapper ?? ApiDataMapper();
   }
+
+  // ---------------------------------------------------------------------------
+  late DioClient httpClient;
+
+  @override
+  ApiDataMapper? mapper;
 
   // ---------------------------------------------------------------------------
   @override

@@ -1,26 +1,21 @@
 import 'package:flutter/material.dart';
 
 // расширение для сокращенного доступа к стилям текста темы
-extension ContextFontExtention on BuildContext {
-  TextStyle? get headline1Style => Theme.of(this).textTheme.headline1;
+extension FontTipography on BuildContext {
+  // H1 заголовки
+  TextStyle? get textStyle$Head => Theme.of(this).textTheme.headlineLarge;
 
-  TextStyle? get headline2Style => Theme.of(this).textTheme.headline2;
+  // Кнопки
+  TextStyle? get textStyle$Button => Theme.of(this).textTheme.bodyLarge;
 
-  TextStyle? get headline3Style => Theme.of(this).textTheme.headline3;
+  // Подзаголовки
+  TextStyle? get textStyle$Subtitle => Theme.of(this).textTheme.titleSmall;
 
-  TextStyle? get headline4Style => Theme.of(this).textTheme.headline4;
+  // Основной текст
+  TextStyle? get textStyle$Body => Theme.of(this).textTheme.bodyMedium;
 
-  TextStyle? get buttonStyle => Theme.of(this).textTheme.button;
-
-  TextStyle? get subtitle1Style => Theme.of(this).textTheme.subtitle1;
-
-  TextStyle? get subtitle2Style => Theme.of(this).textTheme.subtitle2;
-
-  TextStyle? get bodyText1Style => Theme.of(this).textTheme.bodyText1;
-
-  TextStyle? get bodyText2Style => Theme.of(this).textTheme.bodyText2;
-
-  TextStyle? get overLineStyle => Theme.of(this).textTheme.overline;
+  // Меню
+  TextStyle? get textStyle$Menu => Theme.of(this).textTheme.labelSmall;
 }
 
 extension IterableModifier<E> on Iterable<E> {

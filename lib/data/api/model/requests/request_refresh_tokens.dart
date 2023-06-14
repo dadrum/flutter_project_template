@@ -5,7 +5,7 @@ import '../../http_client/i_api_request.dart';
 
 @immutable
 class RequestRefreshTokens extends IApiRequest {
-  RequestRefreshTokens({
+  const RequestRefreshTokens({
     required this.refreshToken,
   }) : super(
           methodType: AvailableApiMethods.post,
@@ -23,5 +23,4 @@ class RequestRefreshTokens extends IApiRequest {
 
   // @override
   // String get endPoint => '$initialUrl/$some_args?param=$p1';
-
 }

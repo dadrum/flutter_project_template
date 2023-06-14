@@ -14,11 +14,6 @@ part 'states.dart';
 @DepGen()
 class AuthControllerBloc
     extends Bloc<AuthControllerEvents, AuthControllerStates> {
-  final IAuthenticateController authenticateController;
-  final IApiFacade api;
-
-  AuthenticateSubscription? _authenticateSubscription;
-
   // ---------------------------------------------------------------------------
   AuthControllerBloc({
     @DepArg() required this.authenticateController,
@@ -34,6 +29,11 @@ class AuthControllerBloc
     add(const AuthControllerEvents.onInitializeRequested());
   }
 
+  // ---------------------------------------------------------------------------
+  final IAuthenticateController authenticateController;
+  final IApiFacade api;
+
+  AuthenticateSubscription? _authenticateSubscription;
   // ---------------------------------------------------------------------------
   @override
   Future<void> close() async {

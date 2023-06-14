@@ -18,10 +18,6 @@ part 'states.dart';
 
 @DepGen()
 class SplashBloc extends Bloc<SplashEvents, SplashStates> {
-  final IAuthenticateController authenticateController;
-  final IApiFacade api;
-  final ILocalCache localCache;
-
   // ---------------------------------------------------------------------------
   SplashBloc({
     @DepArg() required this.authenticateController,
@@ -31,6 +27,10 @@ class SplashBloc extends Bloc<SplashEvents, SplashStates> {
     on<_EventInitialize>(onEventInitialize);
     add(const SplashEvents.initialize());
   }
+  // ---------------------------------------------------------------------------
+  final IAuthenticateController authenticateController;
+  final IApiFacade api;
+  final ILocalCache localCache;
 
   // ---------------------------------------------------------------------------
   Future<void> onEventInitialize(
@@ -58,7 +58,7 @@ class SplashBloc extends Bloc<SplashEvents, SplashStates> {
     try {
       bool isFirstStart = await localCache.isFirstAppStart();
       if (!isFirstStart) {
-        String? selectedLocale = await localCache.getSavedLocale();
+        final selectedLocale = await localCache.getSavedLocale();
         if (selectedLocale == null) {
           // if there no any cached locale settings - set the first start flag
           isFirstStart = true;

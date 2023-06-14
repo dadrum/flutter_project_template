@@ -5,7 +5,7 @@ import '../../http_client/i_api_request.dart';
 
 @immutable
 class RequestAuth extends IApiRequest {
-  RequestAuth({
+  const RequestAuth({
     required this.login,
     required this.password,
   }) : super(
