@@ -233,7 +233,7 @@ class DioClient {
   }
 
   // ---------------------------------------------------------------------------
-  void _logger(String url, Response? response, {Object? body}) {
+  void _logger(String url, Response<dynamic>? response, {Object? body}) {
     dev.log('V___________________________________');
     dev.log(
         '> METHOD: ${response?.requestOptions.method.toString() ?? 'Unknown method'}');

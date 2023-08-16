@@ -13,31 +13,28 @@ import 'presentation/navigation/top_route.dart';
 import 'presentation/values/strings.dart';
 
 Future<void> main() async {
-  final widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
-  await EasyLocalization.ensureInitialized();
-  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
-
   final IAnalytics analytics = Analytics();
   addExceptionsHandlers(analytics);
 
-  // prepare environment
-  final environment = await Environment.buildEnvironment(
-      initialMap: <Type, Object>{IAnalytics: analytics});
+  runZonedGuarded(() async {
+    final widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+    await EasyLocalization.ensureInitialized();
+    FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
 
-  runZonedGuarded(
-      () => runApp(
-            EasyLocalization(
-                supportedLocales: const [
-                  Locale('ru', 'RU'),
-                  Locale('en', 'US')
-                ],
-                path: 'assets/languages',
-                child: Di(
-                  environment: environment,
-                  child: const Application(),
-                )),
-          ),
-      (error, stack) => analytics.onError(error: error, stacktrace: stack));
+    // prepare environment
+    final environment = await Environment.buildEnvironment(
+        initialMap: <Type, Object>{IAnalytics: analytics});
+
+    runApp(
+      EasyLocalization(
+          supportedLocales: const [Locale('ru', 'RU'), Locale('en', 'US')],
+          path: 'assets/languages',
+          child: Di(
+            environment: environment,
+            child: const Application(),
+          )),
+    );
+  }, (error, stack) => analytics.onError(error: error, stacktrace: stack));
 }
 
 // ---------------------------------------------------------------------------
