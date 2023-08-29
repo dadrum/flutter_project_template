@@ -26,10 +26,10 @@ class RequestException implements Exception {
       final keyValue = e.response![errorKey];
       if (keyValue is Iterable) {
         final errors = keyValue.map((dynamic item) => '$item').toList();
-        if (withDots == false) {
-          return errors.join(' ');
-        } else {
+        if (withDots) {
           return errors.join('. ');
+        } else {
+          return errors.join(' ');
         }
       } else {
         return '$keyValue';

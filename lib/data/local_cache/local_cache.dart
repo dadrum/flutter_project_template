@@ -6,7 +6,7 @@ class LocalCache implements ILocalCache {
   // Read tokens from cache
   @override
   Future<TokensPair?> getAuthTokens() {
-    // TODO: implement getAuthTokens
+    // TODO(Admin): implement getAuthTokens
     throw UnimplementedError();
   }
 
@@ -14,7 +14,7 @@ class LocalCache implements ILocalCache {
   // Save new tokens to cache
   @override
   Future<void> setAuthTokens({required TokensPair tokens}) {
-    // TODO: implement setAuthTokens
+    // TODO(Admin): implement setAuthTokens
     throw UnimplementedError();
   }
 
@@ -22,7 +22,7 @@ class LocalCache implements ILocalCache {
   // Delete auth tokens
   @override
   Future<void> deleteAuthTokens() async {
-    // TODO: implement deleteAuthTokens
+    // TODO(Admin): implement deleteAuthTokens
     throw UnimplementedError();
   }
 
@@ -30,7 +30,7 @@ class LocalCache implements ILocalCache {
   // Check - is first app start?
   @override
   Future<bool> isFirstAppStart() async {
-    // TODO: implement deleteAuthTokens
+    // TODO(Admin): implement deleteAuthTokens
     throw UnimplementedError();
   }
 
@@ -38,7 +38,7 @@ class LocalCache implements ILocalCache {
   // Get saved locale name
   @override
   Future<String?> getSavedLocale() async {
-    // TODO: implement getSavedLocale
+    // TODO(Admin): implement getSavedLocale
     throw UnimplementedError();
   }
 
@@ -46,7 +46,7 @@ class LocalCache implements ILocalCache {
   // Get saved locale name
   @override
   Future<void> setSelectedLocale({required String localeName}) async {
-    // TODO: implement setSelectedLocale
+    // TODO(Admin): implement setSelectedLocale
     throw UnimplementedError();
   }
 }

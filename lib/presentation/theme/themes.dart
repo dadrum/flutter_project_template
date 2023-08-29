@@ -53,7 +53,7 @@ class AppTheme {
         highlightColor: Palette.accent.withOpacity(0.05),
         bottomNavigationBarTheme: BottomNavigationBarThemeData(
           backgroundColor: Palette.clean,
-          elevation: 0.0,
+          elevation: 0,
           selectedIconTheme: const IconThemeData(color: Palette.text),
           unselectedIconTheme: const IconThemeData(color: Palette.text),
           selectedItemColor: Palette.text,

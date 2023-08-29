@@ -4,7 +4,7 @@ import '../interfaces/i_analytics.dart';
 class Analytics implements IAnalytics {
   @override
   Future<void> onError({required Object error, Object? stacktrace}) async {
-    // TODO: implement onError
+    // TODO(Admin): implement onError
     if (error is RequestException) {
       // print(error);
       // print(error.requestPath);
@@ -20,7 +20,7 @@ class Analytics implements IAnalytics {
 
   @override
   Future<void> onEvent({required String eventName, String? eventText}) async {
-    // TODO: implement onEvent
+    // TODO(Admin): implement onEvent
     // print('$eventName  $eventText');
   }
 }

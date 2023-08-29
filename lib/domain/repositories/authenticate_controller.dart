@@ -97,9 +97,7 @@ class AuthenticateController implements IAuthenticateController {
   // ---------------------------------------------------------------------------
   // read tokens, saved to local cache
   @override
-  Future<TokensPair?> getCachedTokens() async {
-    return await _localCache.getAuthTokens();
-  }
+  Future<TokensPair?> getCachedTokens() => _localCache.getAuthTokens();
 
 // ---------------------------------------------------------------------------
 }

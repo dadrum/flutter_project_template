@@ -235,11 +235,10 @@ class DioClient {
   // ---------------------------------------------------------------------------
   void _logger(String url, Response<dynamic>? response, {Object? body}) {
     dev.log('V___________________________________');
-    dev.log(
-        '> METHOD: ${response?.requestOptions.method.toString() ?? 'Unknown method'}');
+    dev.log('> METHOD: ${response?.requestOptions.method ?? 'Unknown method'}');
     dev.log(
         '> HEADERS: ${response?.requestOptions.headers.toString() ?? 'Unknown headers'}');
-    dev.log('> PATH: ${response?.requestOptions.path.toString() ?? url}');
+    dev.log('> PATH: ${response?.requestOptions.path ?? url}');
     if (body != null) {
       if (body is FormData) {
         dev.log('> BODY: ${body.fields}');

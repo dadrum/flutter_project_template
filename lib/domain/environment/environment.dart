@@ -22,8 +22,8 @@ class Environment {
 
     // -------------------------------------------------------------------------
     // http клиент
-    final IApiFacade api = ApiFacade();
-    api.setAuthenticateController(authenticateController);
+    final IApiFacade api = ApiFacade()
+      ..setAuthenticateController(authenticateController);
     ret[IApiFacade] = api;
 
     return ret;
