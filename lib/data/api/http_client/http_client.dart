@@ -7,6 +7,7 @@ import 'package:dio/dio.dart';
 import '../../../domain/interfaces/i_authenticate_controller.dart';
 import 'i_api_request.dart';
 import 'request_exception.dart';
+import 'request_timeout_exception.dart';
 
 enum AvailableApiMethods { get, post, put, delete, patch }
 
@@ -325,16 +326,33 @@ class DioClient {
           }
         }
       }
-      Error.throwWithStackTrace(
-          RequestException(
-            httpStatusCode: dioError.response?.statusCode ?? 0,
-            response: responseBody,
-            responseValues: responseValues,
-            requestPath: dioError.requestOptions.path,
-            requestData: dioError.requestOptions.data,
-            requestMethod: dioError.requestOptions.method,
-          ),
-          stackTrace);
+
+      switch (dioError.type) {
+        case DioExceptionType.connectionTimeout:
+        case DioExceptionType.sendTimeout:
+        case DioExceptionType.receiveTimeout:
+          Error.throwWithStackTrace(
+              RequestTimeoutException(
+                httpStatusCode: dioError.response?.statusCode ?? 0,
+                response: responseBody,
+                responseValues: responseValues,
+                requestPath: dioError.requestOptions.path,
+                requestData: dioError.requestOptions.data,
+                requestMethod: dioError.requestOptions.method,
+              ),
+              stackTrace);
+        default:
+          Error.throwWithStackTrace(
+              RequestException(
+                httpStatusCode: dioError.response?.statusCode ?? 0,
+                response: responseBody,
+                responseValues: responseValues,
+                requestPath: dioError.requestOptions.path,
+                requestData: dioError.requestOptions.data,
+                requestMethod: dioError.requestOptions.method,
+              ),
+              stackTrace);
+      }
     } on Object {
       rethrow;
     }
