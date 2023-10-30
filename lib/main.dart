@@ -10,6 +10,7 @@ import 'domain/environment/di.dart';
 import 'domain/environment/environment.dart';
 import 'domain/interfaces/i_analytics.dart';
 import 'presentation/navigation/top_route.dart';
+import 'presentation/theme/dynamic_theme.dart';
 import 'presentation/values/strings.dart';
 
 Future<void> main() async {
@@ -31,7 +32,7 @@ Future<void> main() async {
           path: 'assets/languages',
           child: Di(
             environment: environment,
-            child: const Application(),
+            child: const DynamicTheme(child: Application()),
           )),
     );
   }, (error, stack) => analytics.onError(error: error, stacktrace: stack));

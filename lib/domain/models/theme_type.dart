@@ -1,0 +1,1 @@
+enum ThemeTypes { day, night }
