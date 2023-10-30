@@ -293,10 +293,10 @@ packages:
     dependency: "direct main"
     description:
       name: dep_gen
-      sha256: a8bd5a4f07d60319af85c71bda863c6bc8d2898983f93025b8aa938f3218d9f2
+      sha256: "6cdd22bdd7713623c86d26459dae876f7e56aebc812ecba62216872c635f033b"
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.15"
+    version: "1.1.2"
   dio:
     dependency: "direct main"
     description:

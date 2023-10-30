@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 
-import '../../../domain/environment/di.dart';
+import '../../../domain/environment/builders.dep_gen.dart';
 import '../../navigation/top_route.dart';
 import 'bloc/splash_bloc.dart';
 
@@ -13,7 +13,7 @@ class SplashScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider<SplashBloc>(
-      create: (_) => Di.of(context).buildSplashBloc(),
+      create: (_) => context.depGen().buildSplashBloc(),
       child: BlocConsumer<SplashBloc, SplashStates>(
         listenWhen: (_, state) => state.maybeMap(
             initializationCompleted: (_) => true,

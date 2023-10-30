@@ -125,7 +125,6 @@ class SplashBloc extends Bloc<SplashEvents, SplashStates> {
             emitter(SplashStates.initializationCompleted(
                 isFirstStart: isFirstStart));
           }
-          break;
         default:
           // on bad on unsuccessful request
           Error.throwWithStackTrace(

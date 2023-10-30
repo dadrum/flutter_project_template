@@ -219,7 +219,7 @@
     },
     {
       "name": "dep_gen",
-      "rootUri": "file:///Users/pavel/.pub-cache/hosted/pub.dev/dep_gen-1.0.15",
+      "rootUri": "file:///Users/pavel/.pub-cache/hosted/pub.dev/dep_gen-1.1.2",
       "packageUri": "lib/",
       "languageVersion": "3.0"
     },
@@ -812,7 +812,7 @@
       "languageVersion": "3.0"
     }
   ],
-  "generated": "2023-10-30T13:55:34.917839Z",
+  "generated": "2023-10-30T17:32:25.087758Z",
   "generator": "pub",
   "generatorVersion": "3.0.6"
 }

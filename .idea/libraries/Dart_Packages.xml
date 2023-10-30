@@ -257,7 +257,7 @@
         <entry key="dep_gen">
           <value>
             <list>
-              <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/dep_gen-1.0.15/lib" />
+              <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/dep_gen-1.1.2/lib" />
             </list>
           </value>
         </entry>
@@ -979,7 +979,7 @@
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/cupertino_icons-1.0.5/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/dart_style-2.3.3/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/dbus-0.7.8/lib" />
-      <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/dep_gen-1.0.15/lib" />
+      <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/dep_gen-1.1.2/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/dio-5.3.2/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/easy_localization-3.0.2/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/easy_localization_loader-1.0.1+1/lib" />

@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 
 import 'domain/analytics/analytics.dart';
-import 'domain/environment/di.dart';
+import 'domain/environment/builders.dep_gen.dart';
 import 'domain/environment/environment.dart';
 import 'domain/interfaces/i_analytics.dart';
 import 'presentation/navigation/top_route.dart';
@@ -23,15 +23,14 @@ Future<void> main() async {
     FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
 
     // prepare environment
-    final environment = await Environment.buildEnvironment(
-        initialMap: <Type, Object>{IAnalytics: analytics});
+    final environment = Environment()..registry<IAnalytics>(analytics);
 
     runApp(
       EasyLocalization(
           supportedLocales: const [Locale('ru', 'RU'), Locale('en', 'US')],
           path: 'assets/languages',
-          child: Di(
-            environment: environment,
+          child: DepProvider(
+            environment: (await environment.prepare()).lock(),
             child: const DynamicTheme(child: Application()),
           )),
     );

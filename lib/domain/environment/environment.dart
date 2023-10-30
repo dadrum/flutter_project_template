@@ -4,28 +4,23 @@ import '../interfaces/i_api_facade.dart';
 import '../interfaces/i_authenticate_controller.dart';
 import '../interfaces/i_local_cache.dart';
 import '../repositories/authenticate_controller.dart';
+import 'builders.dep_gen.dart';
 
-class Environment {
-  static Future<Map<Type, Object>> buildEnvironment(
-      {Map<Type, Object>? initialMap}) async {
-    final Map<Type, Object> ret = initialMap ?? {};
-    // -------------------------------------------------------------------------
-    // Local cache
+class Environment extends DepGenEnvironment {
+  Future<Environment> prepare() async {
     final ILocalCache localCache = LocalCache();
-    ret[ILocalCache] = localCache;
+    registry<ILocalCache>(localCache);
 
-    // -------------------------------------------------------------------------
-    // Authenticate controller
     final IAuthenticateController authenticateController =
         AuthenticateController(localCache: localCache);
-    ret[IAuthenticateController] = authenticateController;
+    registry<IAuthenticateController>(authenticateController);
 
     // -------------------------------------------------------------------------
     // http клиент
     final IApiFacade api = ApiFacade()
       ..setAuthenticateController(authenticateController);
-    ret[IApiFacade] = api;
+    registry<IApiFacade>(api);
 
-    return ret;
+    return this;
   }
 }

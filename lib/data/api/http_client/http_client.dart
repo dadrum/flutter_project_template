@@ -265,19 +265,14 @@ class DioClient {
       switch (request.methodType) {
         case AvailableApiMethods.get:
           response = await _dio!.get<String>(url);
-          break;
         case AvailableApiMethods.post:
           response = await _dio!.post<String>(url, data: request.body);
-          break;
         case AvailableApiMethods.put:
           response = await _dio!.put<String>(url, data: request.body);
-          break;
         case AvailableApiMethods.delete:
           response = await _dio!.delete<String>(url, data: request.body);
-          break;
         case AvailableApiMethods.patch:
           response = await _dio!.patch<String>(url, data: request.body);
-          break;
       }
 
       if (debugMode) {
