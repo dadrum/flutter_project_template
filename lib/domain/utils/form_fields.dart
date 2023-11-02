@@ -32,6 +32,12 @@ class FormButton {
 }
 
 // -----------------------------------------------------------------------------
+// кастомный валидатор для полей ввода
+abstract class FormFieldValidator<Object> {
+  bool isValid(Object value);
+}
+
+// -----------------------------------------------------------------------------
 @immutable
 base class FormField<T> {
   FormField({
@@ -51,6 +57,8 @@ base class FormField<T> {
     int? maxLength,
     // принудительное указание текста ошибки
     String? customErrorText,
+    // кастомный набор валидаторов
+    Iterable<FormFieldValidator<dynamic>>? validators,
   })  : _value = value,
         _requiredField = requiredField,
         _hideErrorState = hideErrorState,
@@ -58,6 +66,7 @@ base class FormField<T> {
         _maxLength = maxLength,
         _visible = visible,
         _enabled = enabled,
+        _validators = validators ?? const [],
         assert((minLength ?? 0) >= 0, 'minLength is not negative value'),
         assert(minLength == null || maxLength == null || minLength <= maxLength,
             'minLength is not bigger than maxLength') {
@@ -108,6 +117,8 @@ base class FormField<T> {
   /// ошибка, если поле пустое, но помечено как обязательное
   late final bool _errorOnEmptyRequiredValue;
 
+  final Iterable<FormFieldValidator<dynamic>> _validators;
+
   // ---------------------------------------------------------------------------
   /// геттеры
   T? get value => _value;
@@ -126,12 +137,20 @@ base class FormField<T> {
 
   String? get customErrorText => _customErrorText;
 
+  Iterable<FormFieldValidator<dynamic>> get validators => _validators;
+
+  // если были использованы кастомные валидаторы, то этот геттер возвращает
+  // те из них по которым значение не прошло проверку
+  Iterable<FormFieldValidator<dynamic>> get validatorsWithErrors =>
+      _validatorsWithError();
+
   @mustCallSuper
   bool get valid =>
       !_errorOnValidator &&
       !_errorOnEmptyRequiredValue &&
       (_customErrorText?.isEmpty ?? true) &&
-      !_errorOnLengthValidator();
+      !_errorOnLengthValidator() &&
+      _validatorsWithError().isEmpty;
 
   bool get invalid => !valid;
 
@@ -140,6 +159,11 @@ base class FormField<T> {
   bool get errorOnValidator => _errorOnValidator;
 
   bool get errorOnLengthValidator => _errorOnLengthValidator();
+
+  // ---------------------------------------------------------------------------
+  // возвращает те валидаторы по которым значение не прошло проверку
+  Iterable<FormFieldValidator<dynamic>> _validatorsWithError() =>
+      _validators.where((validator) => !validator.isValid(value));
 
   // ---------------------------------------------------------------------------
   /// Валидатор длины
@@ -221,6 +245,7 @@ final class FormFieldValue<T> extends FormField<T> {
     int? minLength,
     int? maxLength,
     String? customErrorText,
+    Iterable<FormFieldValidator<dynamic>>? validators,
   }) : super(
           value: value,
           requiredField: requiredField,
@@ -230,6 +255,7 @@ final class FormFieldValue<T> extends FormField<T> {
           minLength: minLength,
           maxLength: maxLength,
           customErrorText: customErrorText,
+          validators: validators,
         );
 
   // ---------------------------------------------------------------------------
@@ -247,6 +273,7 @@ final class FormFieldValue<T> extends FormField<T> {
         customErrorText: customErrorText,
         minLength: minLength,
         maxLength: maxLength,
+        validators: validators,
       );
 
   // ---------------------------------------------------------------------------
@@ -260,6 +287,7 @@ final class FormFieldValue<T> extends FormField<T> {
         customErrorText: errorText,
         minLength: minLength,
         maxLength: maxLength,
+        validators: validators,
       );
 
 // ---------------------------------------------------------------------------
@@ -279,6 +307,7 @@ final class FormFieldValue<T> extends FormField<T> {
         customErrorText: customErrorText,
         minLength: minLength,
         maxLength: maxLength,
+        validators: validators,
       );
 }
 
@@ -298,6 +327,7 @@ final class FormFieldString extends FormField<String> {
     int? minLength,
     int? maxLength,
     String? customErrorText,
+    Iterable<FormFieldValidator<dynamic>>? validators,
   }) : super(
           value: value,
           requiredField: requiredField,
@@ -307,6 +337,7 @@ final class FormFieldString extends FormField<String> {
           minLength: minLength,
           maxLength: maxLength,
           customErrorText: customErrorText,
+          validators: validators,
         );
 
   // ---------------------------------------------------------------------------
@@ -324,6 +355,7 @@ final class FormFieldString extends FormField<String> {
         customErrorText: customErrorText,
         minLength: minLength,
         maxLength: maxLength,
+        validators: validators,
       );
 
   // ---------------------------------------------------------------------------
@@ -337,6 +369,7 @@ final class FormFieldString extends FormField<String> {
         customErrorText: errorText,
         minLength: minLength,
         maxLength: maxLength,
+        validators: validators,
       );
 
 // ---------------------------------------------------------------------------
@@ -356,6 +389,7 @@ final class FormFieldString extends FormField<String> {
         customErrorText: customErrorText,
         minLength: minLength,
         maxLength: maxLength,
+        validators: validators,
       );
 }
 
@@ -377,6 +411,7 @@ final class FormFieldNumber extends FormField<String> {
     String? customErrorText,
     bool isDecimal = true,
     bool notNegative = false,
+    Iterable<FormFieldValidator<dynamic>>? validators,
   })  : _isDecimal = isDecimal,
         _notNegative = notNegative,
         super(
@@ -388,6 +423,7 @@ final class FormFieldNumber extends FormField<String> {
           minLength: minLength,
           maxLength: maxLength,
           customErrorText: customErrorText,
+          validators: validators,
         ) {
     _errorOnNumberFormat = !_specificValidator(value);
     _errorOnNotNegative = !_validateNegativeNumbers(value);
@@ -449,6 +485,7 @@ final class FormFieldNumber extends FormField<String> {
         minLength: minLength,
         maxLength: maxLength,
         notNegative: notNegative,
+        validators: validators,
       );
 
 // ---------------------------------------------------------------------------
@@ -464,6 +501,7 @@ final class FormFieldNumber extends FormField<String> {
         minLength: minLength,
         maxLength: maxLength,
         notNegative: notNegative,
+        validators: validators,
       );
 
 // ---------------------------------------------------------------------------
@@ -487,6 +525,7 @@ final class FormFieldNumber extends FormField<String> {
         minLength: minLength,
         maxLength: maxLength,
         notNegative: notNegative ?? this.notNegative,
+        validators: validators,
       );
 }
 
@@ -505,6 +544,7 @@ final class FormFieldEmail extends FormField<String?> {
     int? minLength,
     int? maxLength,
     String? customErrorText,
+    Iterable<FormFieldValidator<dynamic>>? validators,
   })  : _errorOnEmailFormat = !_validatorEmailFormat(value),
         super(
           value: value,
@@ -515,6 +555,7 @@ final class FormFieldEmail extends FormField<String?> {
           minLength: minLength,
           maxLength: maxLength,
           customErrorText: customErrorText,
+          validators: validators,
         );
 
   static final _emailRegExp = RegExp(
@@ -545,6 +586,7 @@ final class FormFieldEmail extends FormField<String?> {
         customErrorText: customErrorText,
         minLength: minLength,
         maxLength: maxLength,
+        validators: validators,
       );
 
   // ---------------------------------------------------------------------------
@@ -558,6 +600,7 @@ final class FormFieldEmail extends FormField<String?> {
         customErrorText: errorText,
         minLength: minLength,
         maxLength: maxLength,
+        validators: validators,
       );
 
   // ---------------------------------------------------------------------------
@@ -577,6 +620,7 @@ final class FormFieldEmail extends FormField<String?> {
         customErrorText: customErrorText,
         minLength: minLength,
         maxLength: maxLength,
+        validators: validators,
       );
 }
 
@@ -595,6 +639,7 @@ final class FormFieldPhone extends FormField<String?> {
     int? minLength,
     int? maxLength,
     String? customErrorText,
+    Iterable<FormFieldValidator<dynamic>>? validators,
   })  : _errorOnPhoneFormat = _validatorPhoneFormat(value),
         super(
           value: value,
@@ -605,6 +650,7 @@ final class FormFieldPhone extends FormField<String?> {
           minLength: minLength,
           maxLength: maxLength,
           customErrorText: customErrorText,
+          validators: validators,
         );
 
   static final _phoneRegExp = RegExp(
@@ -636,6 +682,7 @@ final class FormFieldPhone extends FormField<String?> {
         customErrorText: customErrorText,
         minLength: minLength,
         maxLength: maxLength,
+        validators: validators,
       );
 
   // ---------------------------------------------------------------------------
@@ -648,6 +695,7 @@ final class FormFieldPhone extends FormField<String?> {
         customErrorText: errorText,
         minLength: minLength,
         maxLength: maxLength,
+        validators: validators,
       );
 
   // ---------------------------------------------------------------------------
@@ -667,6 +715,7 @@ final class FormFieldPhone extends FormField<String?> {
         customErrorText: customErrorText,
         minLength: minLength,
         maxLength: maxLength,
+        validators: validators,
       );
 }
 
@@ -686,6 +735,7 @@ final class FormFieldPassword extends FormField<String?> {
     int? maxLength,
     bool isObscured = true,
     String? customErrorText,
+    Iterable<FormFieldValidator<dynamic>>? validators,
   })  : _errorOnWrongLength = _validatorWrongLength(value),
         _errorOnContainNonEnglishLetters = _validatorContainNonEnglish(value),
         _errorOnMissingLowercaseLetters = !_validatorHasLowercaseLetters(value),
@@ -701,6 +751,7 @@ final class FormFieldPassword extends FormField<String?> {
           minLength: minLength,
           maxLength: maxLength,
           customErrorText: customErrorText,
+          validators: validators,
         );
 
   static final RegExp hasNonEnglishLetters = RegExp(r'[^\x00-\x7F]');
@@ -784,6 +835,7 @@ final class FormFieldPassword extends FormField<String?> {
         isObscured: _isObscured,
         minLength: minLength,
         maxLength: maxLength,
+        validators: validators,
       );
 
   // ---------------------------------------------------------------------------
@@ -798,6 +850,7 @@ final class FormFieldPassword extends FormField<String?> {
         isObscured: _isObscured,
         minLength: minLength,
         maxLength: maxLength,
+        validators: validators,
       );
 
   // ---------------------------------------------------------------------------
@@ -819,5 +872,6 @@ final class FormFieldPassword extends FormField<String?> {
         isObscured: isObscured ?? this.isObscured,
         minLength: minLength,
         maxLength: maxLength,
+        validators: validators,
       );
 }

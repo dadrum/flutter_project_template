@@ -1,4 +1,4 @@
-import 'package:app_template/domain/utils/form_fields.dart';
+import 'package:cyber_club_user/domain/utils/form_fields.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
@@ -39,6 +39,71 @@ void main() {
       expect(t2.enabled, true);
       expect(t2.visible, true);
       expect(t2.isPending, false);
+    });
+  });
+
+  // -------------------------------------------------------------------------
+  // FormFieldPassword
+  // -------------------------------------------------------------------------
+  group('Check custom validators', () {
+    final catValidator = CatValidator();
+    final dogValidator = DogValidator();
+
+    test('Validate whith catValidator', () {
+      final t1 = FormFieldString(value: 'dog', maxLength: 10);
+      expect(t1.valid, true);
+
+      final t2 = FormFieldString(
+        value: 'dog-cat',
+        maxLength: 10,
+        validators: [catValidator],
+      );
+      expect(t2.valid, true);
+
+      final t3 = FormFieldString(
+        value: 'only dog',
+        maxLength: 10,
+        validators: [catValidator],
+      );
+      expect(t3.valid, false);
+    });
+
+    test('Validate whith several validators', () {
+      final t1 = FormFieldString(value: 'dog', maxLength: 10);
+      expect(t1.valid, true);
+
+      final t2 = FormFieldString(
+        value: 'dog-cat',
+        maxLength: 10,
+        validators: [dogValidator, catValidator],
+      );
+      expect(t2.valid, true);
+
+      final t3 = FormFieldString(
+        value: 'only dog',
+        maxLength: 10,
+        validators: [dogValidator, catValidator],
+      );
+      expect(t3.valid, false);
+    });
+
+    test('Get type of triggered validator', () {
+      final t2 = FormFieldString(
+        value: 'dog-cat',
+        maxLength: 10,
+        validators: [dogValidator, catValidator],
+      );
+
+      expect(t2.validatorsWithErrors.contains(dogValidator), false);
+      expect(t2.validatorsWithErrors.contains(catValidator), false);
+
+      final t3 = FormFieldString(
+        value: 'only dog',
+        maxLength: 10,
+        validators: [dogValidator, catValidator],
+      );
+      expect(t3.validatorsWithErrors.contains(dogValidator), false);
+      expect(t3.validatorsWithErrors.contains(catValidator), true);
     });
   });
 
@@ -1307,4 +1372,18 @@ void main() {
       expect(t5.invalid, true);
     });
   });
+}
+
+class CatValidator implements FormFieldValidator<String?> {
+  @override
+  bool isValid(String? value) {
+    return value?.contains('cat') ?? false;
+  }
+}
+
+class DogValidator implements FormFieldValidator<String?> {
+  @override
+  bool isValid(String? value) {
+    return value?.contains('dog') ?? false;
+  }
 }
