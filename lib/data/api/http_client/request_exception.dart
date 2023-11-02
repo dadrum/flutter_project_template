@@ -1,7 +1,10 @@
 // исключение, вызванное ошибкой при запросе к API
+import 'package:dio/dio.dart';
+
 class RequestException implements Exception {
   const RequestException({
     required this.httpStatusCode,
+    required this.headers,
     this.response,
     this.responseValues,
     required this.requestPath,
@@ -13,6 +16,7 @@ class RequestException implements Exception {
   static const String errorKey = 'Error';
 
   final int httpStatusCode;
+  final Map<String, dynamic>? headers;
   final Map<String, Object?>? response;
   final String? responseValues;
   final String requestPath;
@@ -26,10 +30,10 @@ class RequestException implements Exception {
       final keyValue = e.response![errorKey];
       if (keyValue is Iterable) {
         final errors = keyValue.map((dynamic item) => '$item').toList();
-        if (withDots) {
-          return errors.join('. ');
-        } else {
+        if (!withDots) {
           return errors.join(' ');
+        } else {
+          return errors.join('. ');
         }
       } else {
         return '$keyValue';
@@ -37,5 +41,27 @@ class RequestException implements Exception {
     } else {
       return null;
     }
+  }
+
+  @override
+  String toString() {
+    final sb = StringBuffer()
+      ..writeln('> METHOD: $requestMethod')
+      ..writeln('> HEADERS: $headers')
+      ..writeln('> PATH: $requestPath');
+
+    if (requestData != null) {
+      if (requestData is FormData) {
+        sb.writeln('> BODY: ${(requestData as FormData).fields}');
+      } else {
+        sb.writeln('> BODY: $requestData');
+      }
+    }
+    sb
+      ..writeln('< STATUS: $httpStatusCode')
+      ..writeln(
+          '< RESPONSE: ${response?.toString() ?? 'Response data is null'}');
+
+    return sb.toString();
   }
 }

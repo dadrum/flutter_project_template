@@ -7,12 +7,13 @@ import 'package:dio/dio.dart';
 import '../../../domain/interfaces/i_authenticate_controller.dart';
 import 'i_api_request.dart';
 import 'request_exception.dart';
-import 'request_timeout_exception.dart';
 
 enum AvailableApiMethods { get, post, put, delete, patch }
 
 class DioClient {
   DioClient({bool useLocaleSettings = false}) {
+    _baseUrl = const String.fromEnvironment('API_URL');
+
     // настройка использования разных языков
     if (useLocaleSettings) {
       _localeSettings = englishLocaleSettings;
@@ -31,13 +32,13 @@ class DioClient {
 
   static const String englishLocaleSettings = 'en-US,en;q=0.9,ru-RU';
   static const String russianLocaleSettings = 'ru-RU,ru;q=0.9,en-US';
-  static const String _hostUrl = 'domain.ru/api_path';
-  static const String _baseUrl = 'https://$_hostUrl';
 
   // listener for authenticate events
   IAuthenticateController? authenticateController;
 
   String? _refreshToken;
+
+  late final String _baseUrl;
 
   String get apiUrl => _baseUrl;
 
@@ -191,7 +192,7 @@ class DioClient {
     final Map<String, Object> body = <String, Object>{
       'refresh': _refreshToken!
     };
-    const String url = '${_baseUrl}auth/token/refresh/';
+    final String url = '$_baseUrl/User/Token/Refresh';
 
     try {
       final Response<String> response =
@@ -321,33 +322,17 @@ class DioClient {
           }
         }
       }
-
-      switch (dioError.type) {
-        case DioExceptionType.connectionTimeout:
-        case DioExceptionType.sendTimeout:
-        case DioExceptionType.receiveTimeout:
-          Error.throwWithStackTrace(
-              RequestTimeoutException(
-                httpStatusCode: dioError.response?.statusCode ?? 0,
-                response: responseBody,
-                responseValues: responseValues,
-                requestPath: dioError.requestOptions.path,
-                requestData: dioError.requestOptions.data,
-                requestMethod: dioError.requestOptions.method,
-              ),
-              stackTrace);
-        default:
-          Error.throwWithStackTrace(
-              RequestException(
-                httpStatusCode: dioError.response?.statusCode ?? 0,
-                response: responseBody,
-                responseValues: responseValues,
-                requestPath: dioError.requestOptions.path,
-                requestData: dioError.requestOptions.data,
-                requestMethod: dioError.requestOptions.method,
-              ),
-              stackTrace);
-      }
+      Error.throwWithStackTrace(
+          RequestException(
+            httpStatusCode: dioError.response?.statusCode ?? 0,
+            response: responseBody,
+            responseValues: responseValues,
+            requestPath: dioError.requestOptions.path,
+            requestData: dioError.requestOptions.data,
+            requestMethod: dioError.requestOptions.method,
+            headers: dioError.requestOptions.headers,
+          ),
+          stackTrace);
     } on Object {
       rethrow;
     }

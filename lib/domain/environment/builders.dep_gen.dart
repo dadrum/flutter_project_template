@@ -16,7 +16,6 @@ import 'package:app_template/domain/interfaces/i_authenticate_controller.dart';
 import 'package:app_template/presentation/navigation/auth_controller/bloc/auth_controller_bloc.dart';
 import 'package:app_template/presentation/screens/splash/bloc/splash_bloc.dart';
 
-
 /// The environment in which all used dependency instances are configured
 @immutable
 class DepGenEnvironment {
@@ -58,7 +57,7 @@ extension DepProviderContextExtension on BuildContext {
   /// Obtain a value from the nearest ancestor DepProvider.
   DepProvider depGen() => DepProvider.of(this);
 }
-  
+
 // -----------------------------------------------------------------------------
 // -----------------------------------------------------------------------------
 // -----------------------------------------------------------------------------
@@ -69,14 +68,15 @@ class DepProvider extends InheritedWidget {
     required DepGenEnvironment environment,
   })  : _env = environment,
         super(key: key, child: child);
-        
-  // --------------------------------------------------------------------------- 
-  /// A pre-configured environment containing the dependencies used 
+
+  // ---------------------------------------------------------------------------
+  /// A pre-configured environment containing the dependencies used
   final DepGenEnvironment _env;
 
   // ---------------------------------------------------------------------------
   static DepProvider of(BuildContext context) {
-    final DepProvider? dp = context.findAncestorWidgetOfExactType<DepProvider>();
+    final DepProvider? dp =
+        context.findAncestorWidgetOfExactType<DepProvider>();
     if (dp == null) {
       throw UnimplementedError('DepProvider is not initialized in context');
     }
@@ -98,22 +98,16 @@ class DepProvider extends InheritedWidget {
   /// A safe method for trying to get an instance by its type.
   T? mayBeGet<T>() => _env.mayBeGet<T>();
 
-  
+  // ---------------------------------------------------------------------------
+  AuthControllerBloc buildAuthControllerBloc() => AuthControllerBloc(
+        authenticateController: _env.g<IAuthenticateController>(),
+        api: _env.g<IApiFacade>(),
+      );
 
   // ---------------------------------------------------------------------------
-  AuthControllerBloc buildAuthControllerBloc(
-  ) => AuthControllerBloc(
-      authenticateController: _env.g<IAuthenticateController>(),
-      api: _env.g<IApiFacade>(),
-    );
-
-
-  // ---------------------------------------------------------------------------
-  SplashBloc buildSplashBloc(
-  ) => SplashBloc(
-      authenticateController: _env.g<IAuthenticateController>(),
-      localCache: _env.g<ILocalCache>(),
-      api: _env.g<IApiFacade>(),
-    );
-
+  SplashBloc buildSplashBloc() => SplashBloc(
+        authenticateController: _env.g<IAuthenticateController>(),
+        localCache: _env.g<ILocalCache>(),
+        api: _env.g<IApiFacade>(),
+      );
 }

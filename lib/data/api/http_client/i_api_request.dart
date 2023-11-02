@@ -22,5 +22,5 @@ abstract class IApiRequest {
   AvailableApiMethods get methodType => _methodType;
 
   // геттер для оверрайта тела запроса
-  Map<String, Object?>? get body => null;
+  Object? get body => null;
 }
