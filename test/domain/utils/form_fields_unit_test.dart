@@ -1,4 +1,4 @@
-import 'package:cyber_club_user/domain/utils/form_fields.dart';
+import 'package:app_template/domain/utils/form_fields.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
