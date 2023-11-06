@@ -1,0 +1,13 @@
+{
+  "authScreenTitle": "Auth title",
+  "commonScreenName": "Screen {name}",
+  "@commonScreenName": {
+    "description": "Universal label for any screen",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "language": "English"
+}

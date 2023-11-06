@@ -1,9 +1,9 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 
 import '../../../domain/environment/builders.dep_gen.dart';
+import '../../../l10n/locale_provider.dart';
 import '../../navigation/top_route.dart';
 import 'bloc/splash_bloc.dart';
 
@@ -44,7 +44,7 @@ class SplashScreen extends StatelessWidget {
         ? const Locale('ru', 'RU')
         : const Locale('en', 'US');
 
-    await EasyLocalization.of(context)?.setLocale(setLocale);
+    LocaleProvider.of(context)?.setLocale(setLocale);
   }
 
   // ---------------------------------------------------------------------------

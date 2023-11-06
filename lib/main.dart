@@ -1,153 +1,72 @@
+import 'dart:async';
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 
-import '../../domain/models/theme_type.dart';
-import 'presentation/theme/themes.dart';
-import 'presentation/values/palette.dart';
+import 'domain/analytics/analytics.dart';
+import 'domain/environment/builders.dep_gen.dart';
+import 'domain/environment/environment.dart';
+import 'domain/interfaces/i_analytics.dart';
+import 'l10n/locale_provider.dart';
+import 'presentation/navigation/top_route.dart';
+import 'presentation/theme/dynamic_theme.dart';
+import 'presentation/values/strings.dart';
 
-// ---------------------------------------------------------------------------
-// ---------------------------------------------------------------------------
-// ---------------------------------------------------------------------------
-class DynamicTheme extends StatefulWidget {
-  const DynamicTheme({
-    Key? key,
-    this.initialThemeKey,
-    required this.child,
-  }) : super(key: key);
+Future<void> main() async {
+  final IAnalytics analytics = Analytics();
+  addExceptionsHandlers(analytics);
 
-  final Widget child;
-  final ThemeTypes? initialThemeKey;
+  runZonedGuarded(() async {
+    final widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+    FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
 
-  @override
-  _DynamicThemeState createState() => _DynamicThemeState();
+    // prepare environment
+    final environment = Environment()..registry<IAnalytics>(analytics);
 
-  // ---------------------------------------------------------------------------
-  static ThemeData? themeOf(BuildContext context) {
-    final _DynamicThemeInherited? inherited =
-    context.dependOnInheritedWidgetOfExactType<_DynamicThemeInherited>();
-    return inherited?.data.theme;
-  }
-
-  // ---------------------------------------------------------------------------
-  static _DynamicThemeState? instanceOf(BuildContext context) {
-    final _DynamicThemeInherited? inherited =
-    context.dependOnInheritedWidgetOfExactType<_DynamicThemeInherited>();
-    return inherited?.data;
-  }
-
-  // ---------------------------------------------------------------------------
-  static Palette paletteOf(BuildContext context) {
-    final _DynamicThemeInherited? inherited =
-    context.dependOnInheritedWidgetOfExactType<_DynamicThemeInherited>();
-    return inherited?.data.palette ?? Palette.day();
-  }
+    runApp(
+      DepProvider(
+        environment: (await environment.prepare()).lock(),
+        child: const DynamicTheme(child: LocaleProvider(child: Application())),
+      ),
+    );
+  }, (error, stack) => analytics.onError(error: error, stacktrace: stack));
 }
 
 // ---------------------------------------------------------------------------
 // ---------------------------------------------------------------------------
 // ---------------------------------------------------------------------------
-class _DynamicThemeState extends State<DynamicTheme> {
-  late ThemeData _theme;
-  late Palette _palette;
-  late ThemeTypes _themeType;
+void addExceptionsHandlers(IAnalytics analytics) {
+  //Handle Flutter framework errors
+  FlutterError.onError = (details) {
+    FlutterError.presentError(details);
+    analytics.onError(error: details.exception, stacktrace: details.stack);
+  };
+  // A callback that is invoked when an unhandled error occurs in the root isolate.
+  PlatformDispatcher.instance.onError = (error, stack) {
+    analytics.onError(error: error, stacktrace: stack);
+    return true;
+  };
+}
 
-  late bool isThemeInitialized;
+// ---------------------------------------------------------------------------
+// ---------------------------------------------------------------------------
+// ---------------------------------------------------------------------------
+class Application extends StatelessWidget {
+  const Application({Key? key}) : super(key: key);
 
-  ThemeData get theme => _theme;
-
-  Palette get palette => _palette;
-
-  ThemeTypes get themeType => _themeType;
-
-  // ---------------------------------------------------------------------------
-  @override
-  void initState() {
-    isThemeInitialized = false;
-    if (widget.initialThemeKey != null) {
-      _themeType = widget.initialThemeKey!;
-      _palette = ThemeBuilder.getPalette(widget.initialThemeKey!);
-      _theme = ThemeBuilder.getTheme(widget.initialThemeKey!, _palette);
-    }
-    super.initState();
-  }
-
-  // ---------------------------------------------------------------------------
-  @override
-  void didChangeDependencies() {
-    if (widget.initialThemeKey == null && !isThemeInitialized) {
-      final Brightness systemBrightness =
-          MediaQuery.of(context).platformBrightness;
-      if (systemBrightness == Brightness.dark) {
-        _themeType = ThemeTypes.night;
-        _palette = ThemeBuilder.getPalette(_themeType);
-        _theme = ThemeBuilder.getTheme(_themeType, _palette);
-      } else {
-        _themeType = ThemeTypes.day;
-        _palette = ThemeBuilder.getPalette(_themeType);
-        _theme = ThemeBuilder.getTheme(_themeType, _palette);
-      }
-      isThemeInitialized = true;
-    }
-    super.didChangeDependencies();
-  }
-
-  // ---------------------------------------------------------------------------
-  void changeTheme(ThemeTypes themeKey) {
-    setState(() {
-      _themeType = themeKey;
-      _palette = ThemeBuilder.getPalette(themeKey);
-      _theme = ThemeBuilder.getTheme(themeKey, _palette);
-    });
-  }
-
-  // ---------------------------------------------------------------------------
   @override
   Widget build(BuildContext context) {
-    return _DynamicThemeInherited(
-        data: this,
-        child: AnnotatedRegion<SystemUiOverlayStyle>(
-          value: SystemUiOverlayStyle(
-            /// The brightness of the top status bar icons.
-            /// Only honored in Android version M and greater.
-            statusBarIconBrightness: _themeType != ThemeTypes.night
-                ? Brightness.dark
-                : Brightness.light,
-
-            /// The brightness of top status bar.
-            /// Only honored in iOS.
-            statusBarBrightness: _themeType != ThemeTypes.night
-                ? Brightness.light
-                : Brightness.dark,
-
-            /// The color of the system bottom navigation bar.
-            /// Only honored in Android versions O and greater.
-            systemNavigationBarColor: _palette.black1,
-
-            /// The brightness of the system navigation bar icons.
-            /// Only honored in Android versions O and greater.
-            systemNavigationBarIconBrightness:
-            _theme.brightness == Brightness.dark
-                ? Brightness.dark
-                : Brightness.light,
-          ),
-          child: widget.child,
-        ));
-  }
-}
-
-// ---------------------------------------------------------------------------
-// ---------------------------------------------------------------------------
-// ---------------------------------------------------------------------------
-class _DynamicThemeInherited extends InheritedWidget {
-  const _DynamicThemeInherited({
-    required this.data,
-    Key? key,
-    required Widget child,
-  }) : super(key: key, child: child);
-  final _DynamicThemeState data;
-
-  @override
-  bool updateShouldNotify(_DynamicThemeInherited oldWidget) {
-    return true;
+    return MaterialApp(
+      title: Strings.appName,
+      initialRoute: TopRoute.routeSplash,
+      routes: TopRoute.routes(),
+      theme: Theme.of(context),
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
+      locale: LocaleProvider.of(context)!.locale,
+      debugShowCheckedModeBanner: false,
+    );
   }
 }

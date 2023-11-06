@@ -11,21 +11,21 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+  intl: any
 
   # стейт менеджмент
   flutter_bloc: 8.1.3
   bloc_concurrency: 0.2.2
 
   # сеть
-  dio: 5.3.2
+  dio: 5.3.3
   json_annotation: 4.8.1
 
-  # локализация
-  easy_localization: 3.0.2
-
   # хранение локальных данных
-  shared_preferences: 2.2.0
-  flutter_secure_storage: 8.0.0
+  shared_preferences: 2.2.2
+  flutter_secure_storage: 9.0.0
 
   # форматированные поля ввода
   mask_text_input_formatter: 2.5.0
@@ -34,16 +34,15 @@ dependencies:
   dep_gen: 1.1.2
 
   # нативный сплеш
-  flutter_native_splash: 2.3.2
+  flutter_native_splash: 2.3.5
 
-  cupertino_icons: 1.0.5
-  flutter_svg: 2.0.7
-  carousel_slider: 4.2.1
-  shimmer: 3.0.0
+  cupertino_icons: 1.0.6
+  flutter_svg: 2.0.9
+  #  carousel_slider: 4.2.1
+  #  shimmer: 3.0.0
 
   # кодогенерация
   freezed_annotation: 2.4.1
-
 
 dev_dependencies:
   flutter_test:
@@ -53,15 +52,13 @@ dev_dependencies:
   # кодогенерация
   build_runner: 2.4.6
   json_serializable: 6.7.1
-  freezed: 2.4.2
-
-  # локализация
-  easy_localization_loader: 1.0.1+1
+  freezed: 2.4.5
 
 #dependency_overrides:
 
 flutter:
   uses-material-design: true
+  generate: true
 
   assets:
     - assets/fonts/

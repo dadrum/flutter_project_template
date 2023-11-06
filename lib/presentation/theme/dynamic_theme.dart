@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 
 import '../../domain/models/theme_type.dart';
@@ -25,21 +24,21 @@ class DynamicTheme extends StatefulWidget {
   // ---------------------------------------------------------------------------
   static ThemeData? themeOf(BuildContext context) {
     final _DynamicThemeInherited? inherited =
-        context.dependOnInheritedWidgetOfExactType<_DynamicThemeInherited>();
+    context.dependOnInheritedWidgetOfExactType<_DynamicThemeInherited>();
     return inherited?.data.theme;
   }
 
   // ---------------------------------------------------------------------------
   static _DynamicThemeState? instanceOf(BuildContext context) {
     final _DynamicThemeInherited? inherited =
-        context.dependOnInheritedWidgetOfExactType<_DynamicThemeInherited>();
+    context.dependOnInheritedWidgetOfExactType<_DynamicThemeInherited>();
     return inherited?.data;
   }
 
   // ---------------------------------------------------------------------------
   static Palette paletteOf(BuildContext context) {
     final _DynamicThemeInherited? inherited =
-        context.dependOnInheritedWidgetOfExactType<_DynamicThemeInherited>();
+    context.dependOnInheritedWidgetOfExactType<_DynamicThemeInherited>();
     return inherited?.data.palette ?? Palette.day();
   }
 }
@@ -52,9 +51,7 @@ class _DynamicThemeState extends State<DynamicTheme> {
   late Palette _palette;
   late ThemeTypes _themeType;
 
-  late Color _statusBarColor;
-
-  Color get statusBarColor => _statusBarColor;
+  late bool isThemeInitialized;
 
   ThemeData get theme => _theme;
 
@@ -65,13 +62,21 @@ class _DynamicThemeState extends State<DynamicTheme> {
   // ---------------------------------------------------------------------------
   @override
   void initState() {
+    isThemeInitialized = false;
     if (widget.initialThemeKey != null) {
       _themeType = widget.initialThemeKey!;
       _palette = ThemeBuilder.getPalette(widget.initialThemeKey!);
       _theme = ThemeBuilder.getTheme(widget.initialThemeKey!, _palette);
-    } else {
+    }
+    super.initState();
+  }
+
+  // ---------------------------------------------------------------------------
+  @override
+  void didChangeDependencies() {
+    if (widget.initialThemeKey == null && !isThemeInitialized) {
       final Brightness systemBrightness =
-          SchedulerBinding.instance.platformDispatcher.platformBrightness;
+          MediaQuery.of(context).platformBrightness;
       if (systemBrightness == Brightness.dark) {
         _themeType = ThemeTypes.night;
         _palette = ThemeBuilder.getPalette(_themeType);
@@ -81,9 +86,9 @@ class _DynamicThemeState extends State<DynamicTheme> {
         _palette = ThemeBuilder.getPalette(_themeType);
         _theme = ThemeBuilder.getTheme(_themeType, _palette);
       }
+      isThemeInitialized = true;
     }
-    _statusBarColor = _palette.red;
-    super.initState();
+    super.didChangeDependencies();
   }
 
   // ---------------------------------------------------------------------------
@@ -92,17 +97,6 @@ class _DynamicThemeState extends State<DynamicTheme> {
       _themeType = themeKey;
       _palette = ThemeBuilder.getPalette(themeKey);
       _theme = ThemeBuilder.getTheme(themeKey, _palette);
-    });
-  }
-
-  // ---------------------------------------------------------------------------
-  void setStatusBarColor() {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (mounted) {
-        setState(() {
-          _statusBarColor = _palette.red;
-        });
-      }
     });
   }
 
@@ -132,9 +126,9 @@ class _DynamicThemeState extends State<DynamicTheme> {
             /// The brightness of the system navigation bar icons.
             /// Only honored in Android versions O and greater.
             systemNavigationBarIconBrightness:
-                _theme.brightness == Brightness.dark
-                    ? Brightness.dark
-                    : Brightness.light,
+            _theme.brightness == Brightness.dark
+                ? Brightness.dark
+                : Brightness.light,
           ),
           child: widget.child,
         ));
