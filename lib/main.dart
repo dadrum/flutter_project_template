@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../../domain/models/theme_type.dart';
-import '../values/palette.dart';
-import 'themes.dart';
+import 'presentation/theme/themes.dart';
+import 'presentation/values/palette.dart';
 
 // ---------------------------------------------------------------------------
 // ---------------------------------------------------------------------------
