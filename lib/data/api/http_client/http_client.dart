@@ -139,7 +139,7 @@ class DioClient {
               receivedAccessToken = '${tokensPair['access']}';
               receivedRefreshToken = '${tokensPair['refresh']}';
 
-              _dioOptions.headers['authorization'] =
+              _dioOptions.headers[HttpHeaders.authorizationHeader] =
                   _getTokenWithBearer(receivedAccessToken);
 
               _refreshToken = receivedRefreshToken;
