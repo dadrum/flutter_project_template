@@ -12,7 +12,7 @@ import 'package:flutter/widgets.dart';
 
 import 'package:app_template/domain/interfaces/i_api_facade.dart';
 import 'package:app_template/domain/interfaces/i_local_cache.dart';
-import 'package:app_template/domain/interfaces/i_authenticate_controller.dart';
+import 'package:app_template/domain/interfaces/i_authenticate_repository.dart';
 import 'package:app_template/presentation/navigation/auth_controller/bloc/auth_controller_bloc.dart';
 import 'package:app_template/presentation/screens/splash/bloc/splash_bloc.dart';
 
@@ -100,13 +100,13 @@ class DepProvider extends InheritedWidget {
 
   // ---------------------------------------------------------------------------
   AuthControllerBloc buildAuthControllerBloc() => AuthControllerBloc(
-        authenticateController: _env.g<IAuthenticateController>(),
+        authenticateRepository: _env.g<IAuthenticateRepository>(),
         api: _env.g<IApiFacade>(),
       );
 
   // ---------------------------------------------------------------------------
   SplashBloc buildSplashBloc() => SplashBloc(
-        authenticateController: _env.g<IAuthenticateController>(),
+        authenticateRepository: _env.g<IAuthenticateRepository>(),
         localCache: _env.g<ILocalCache>(),
         api: _env.g<IApiFacade>(),
       );

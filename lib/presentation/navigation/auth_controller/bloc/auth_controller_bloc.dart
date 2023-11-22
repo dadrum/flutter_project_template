@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../../../../domain/interfaces/i_api_facade.dart';
-import '../../../../domain/interfaces/i_authenticate_controller.dart';
+import '../../../../domain/interfaces/i_authenticate_repository.dart';
 
 part 'events.dart';
 
@@ -16,10 +16,10 @@ class AuthControllerBloc
     extends Bloc<AuthControllerEvents, AuthControllerStates> {
   // ---------------------------------------------------------------------------
   AuthControllerBloc({
-    @DepArg() required this.authenticateController,
+    @DepArg() required this.authenticateRepository,
     @DepArg() required this.api,
   }) : super(AuthControllerStates.newStatus(
-            status: authenticateController.lastKnownStatus)) {
+            status: authenticateRepository.controller.status)) {
     on<AuthControllerEvents>((event, emitter) => event.map(
           onStatusChanged: (event) => onStatusChanged(event, emitter),
           onInitializeRequested: (event) =>
@@ -30,7 +30,7 @@ class AuthControllerBloc
   }
 
   // ---------------------------------------------------------------------------
-  final IAuthenticateController authenticateController;
+  final IAuthenticateRepository authenticateRepository;
   final IApiFacade api;
 
   AuthenticateSubscription? _authenticateSubscription;
@@ -62,6 +62,6 @@ class AuthControllerBloc
     }
 
     _authenticateSubscription =
-        authenticateController.subscribe(onAuthStateListener);
+        authenticateRepository.subscribe(onAuthStateListener);
   }
 }

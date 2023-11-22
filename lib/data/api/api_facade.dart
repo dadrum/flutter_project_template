@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 
 import '../../domain/interfaces/i_api_facade.dart';
-import '../../domain/interfaces/i_authenticate_controller.dart';
+import '../../domain/interfaces/i_authenticate_repository.dart';
 import '../../domain/models/tokens_pair.dart';
 import 'http_client/http_client.dart';
 import 'mapper/mapper.dart';

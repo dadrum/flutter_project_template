@@ -6,7 +6,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../../../../data/api/http_client/request_exception.dart';
 import '../../../../domain/interfaces/i_api_facade.dart';
-import '../../../../domain/interfaces/i_authenticate_controller.dart';
+import '../../../../domain/interfaces/i_authenticate_repository.dart';
 import '../../../../domain/interfaces/i_local_cache.dart';
 import '../../../../domain/models/tokens_pair.dart';
 
@@ -20,7 +20,7 @@ part 'states.dart';
 class SplashBloc extends Bloc<SplashEvents, SplashStates> {
   // ---------------------------------------------------------------------------
   SplashBloc({
-    @DepArg() required this.authenticateController,
+    @DepArg() required this.authenticateRepository,
     @DepArg() required this.localCache,
     @DepArg() required this.api,
   }) : super(const SplashStates.notInitialized()) {
@@ -28,7 +28,7 @@ class SplashBloc extends Bloc<SplashEvents, SplashStates> {
     add(const SplashEvents.initialize());
   }
   // ---------------------------------------------------------------------------
-  final IAuthenticateController authenticateController;
+  final IAuthenticateRepository authenticateRepository;
   final IApiFacade api;
   final ILocalCache localCache;
 
@@ -102,7 +102,7 @@ class SplashBloc extends Bloc<SplashEvents, SplashStates> {
           await api.refreshTokens(refreshToken: tokensPair.refreshToken);
 
       // cache new tokens
-      await authenticateController.onAccessTokensUpdated(
+      await authenticateRepository.controller.onAccessTokensUpdated(
         newTokens.accessToken,
         newTokens.refreshToken,
       );

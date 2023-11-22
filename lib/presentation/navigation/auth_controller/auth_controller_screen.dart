@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../domain/environment/builders.dep_gen.dart';
-import '../../../domain/interfaces/i_authenticate_controller.dart';
+import '../../../domain/interfaces/i_authenticate_repository.dart';
 import '../../../l10n/locale_provider.dart';
 import '../../screens/auth/auth_screen.dart';
 import '../../screens/workspace/workspace_screen.dart';

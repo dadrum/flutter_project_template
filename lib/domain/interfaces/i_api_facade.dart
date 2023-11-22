@@ -1,7 +1,7 @@
 import '../../../data/api/mapper/mapper.dart';
 
 import '../models/tokens_pair.dart';
-import 'i_authenticate_controller.dart';
+import 'i_authenticate_repository.dart';
 
 abstract class IApiFacade {
   ApiDataMapper? mapper;

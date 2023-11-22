@@ -24,21 +24,21 @@ class DynamicTheme extends StatefulWidget {
   // ---------------------------------------------------------------------------
   static ThemeData? themeOf(BuildContext context) {
     final _DynamicThemeInherited? inherited =
-    context.dependOnInheritedWidgetOfExactType<_DynamicThemeInherited>();
+        context.dependOnInheritedWidgetOfExactType<_DynamicThemeInherited>();
     return inherited?.data.theme;
   }
 
   // ---------------------------------------------------------------------------
   static _DynamicThemeState? instanceOf(BuildContext context) {
     final _DynamicThemeInherited? inherited =
-    context.dependOnInheritedWidgetOfExactType<_DynamicThemeInherited>();
+        context.dependOnInheritedWidgetOfExactType<_DynamicThemeInherited>();
     return inherited?.data;
   }
 
   // ---------------------------------------------------------------------------
   static Palette paletteOf(BuildContext context) {
     final _DynamicThemeInherited? inherited =
-    context.dependOnInheritedWidgetOfExactType<_DynamicThemeInherited>();
+        context.dependOnInheritedWidgetOfExactType<_DynamicThemeInherited>();
     return inherited?.data.palette ?? Palette.day();
   }
 }
@@ -126,9 +126,9 @@ class _DynamicThemeState extends State<DynamicTheme> {
             /// The brightness of the system navigation bar icons.
             /// Only honored in Android versions O and greater.
             systemNavigationBarIconBrightness:
-            _theme.brightness == Brightness.dark
-                ? Brightness.dark
-                : Brightness.light,
+                _theme.brightness == Brightness.dark
+                    ? Brightness.dark
+                    : Brightness.light,
           ),
           child: widget.child,
         ));

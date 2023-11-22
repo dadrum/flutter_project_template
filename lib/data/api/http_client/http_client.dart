@@ -4,7 +4,7 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 
-import '../../../domain/interfaces/i_authenticate_controller.dart';
+import '../../../domain/interfaces/i_authenticate_repository.dart';
 import 'i_api_request.dart';
 import 'request_exception.dart';
 
