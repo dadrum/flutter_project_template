@@ -62,7 +62,7 @@ class Application extends StatelessWidget {
       title: Strings.appName,
       initialRoute: TopRoute.routeSplash,
       routes: TopRoute.routes(),
-      theme: Theme.of(context),
+      theme: DynamicTheme.themeOf(context),
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
       locale: LocaleProvider.of(context)!.locale,
