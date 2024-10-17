@@ -19,7 +19,8 @@ class Debouncer<T> {
 
   // ---------------------------------------------------------------------------
   void onEvent(T? newObject, {int? period}) {
-    final isCleared = T is! String
+    final isString = newObject != null && newObject.toString() == '';
+    final isCleared = !isString
         ? newObject == null && _cachedObject != null
         : ((_cachedObject as String?)?.isNotEmpty ?? false) &&
             (newObject as String).isEmpty;

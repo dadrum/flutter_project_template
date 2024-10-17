@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+import '../../../domain/extensions/context_extensions.dart';
 import '../../../l10n/locale_provider.dart';
 
 class AuthScreen extends StatelessWidget {
@@ -11,13 +11,13 @@ class AuthScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text(AppLocalizations.of(context)!.authScreenTitle),
+          title: Text(context.texts.authScreenTitle),
         ),
         body: Center(
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text(AppLocalizations.of(context)!.commonScreenName('Auth')),
+              Text(context.texts.commonScreenName('Auth')),
               ElevatedButton(
                   onPressed: () {
                     LocaleProvider.of(context)!.setLocale(const Locale('en'));

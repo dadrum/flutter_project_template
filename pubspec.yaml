@@ -39,10 +39,15 @@ dependencies:
   freezed_annotation: 2.4.4
   json_annotation: 4.9.0
 
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_launcher_icons: 0.14.1
+
+  # testing
+  mockito: 5.4.4
+  bloc_test: 9.1.7
 
   # automatic addition of dependencies
   dep_gen: 1.1.6

@@ -2,7 +2,6 @@ import 'package:dep_gen/dep_gen.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import '../../../../domain/interfaces/i_api_facade.dart';
 import '../../../../domain/interfaces/i_authenticate_repository.dart';
 
 part 'events.dart';
@@ -16,9 +15,9 @@ class AuthControllerBloc
     extends Bloc<AuthControllerEvents, AuthControllerStates> {
   // ---------------------------------------------------------------------------
   AuthControllerBloc({
-    @DepArg() required this.authenticateRepository,
-    @DepArg() required this.api,
-  }) : super(AuthControllerStates.newStatus(
+    @DepArg() required IAuthenticateRepository authenticateRepository,
+  })  : _authenticateRepository = authenticateRepository,
+        super(AuthControllerStates.newStatus(
             status: authenticateRepository.controller.status)) {
     on<AuthControllerEvents>((event, emitter) => event.map(
           onStatusChanged: (event) => onStatusChanged(event, emitter),
@@ -30,10 +29,15 @@ class AuthControllerBloc
   }
 
   // ---------------------------------------------------------------------------
-  final IAuthenticateRepository authenticateRepository;
-  final IApiFacade api;
+  // Dependencies
+  final IAuthenticateRepository _authenticateRepository;
 
+  // Subscriptions/Streams
   AuthenticateSubscription? _authenticateSubscription;
+
+  // States
+  // --
+
   // ---------------------------------------------------------------------------
   @override
   Future<void> close() async {
@@ -62,6 +66,6 @@ class AuthControllerBloc
     }
 
     _authenticateSubscription =
-        authenticateRepository.subscribe(onAuthStateListener);
+        _authenticateRepository.subscribe(onAuthStateListener);
   }
 }

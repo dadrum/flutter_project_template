@@ -87,7 +87,7 @@ class SplashBloc extends Bloc<SplashEvents, SplashStates> {
           await api.refreshTokens(refreshToken: tokensPair.refresh);
 
       // cache new tokens
-      await authenticateRepository.controller.onAccessTokensUpdated(
+      await authenticateRepository.controller.onAuthenticated(
         newTokens.access,
         newTokens.refresh,
       );

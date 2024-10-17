@@ -18,16 +18,12 @@ abstract class IAuthenticateController {
   /// какой статус авторизации был последним
   AuthenticateStatus get status;
 
-  /// accepts the event that you can log in
-  /// and receives tokens
-  Future<void> onAuthenticated(String accessToken, String refreshToken);
-
   /// accepts the event that authentication failed
   Future<void> onAuthenticateCanceled();
 
   /// accepts the event that the tokens have been successfully updated
   /// receives fresh tokens
-  Future<void> onAccessTokensUpdated(String accessToken, String refreshToken);
+  Future<void> onAuthenticated(String accessToken, String refreshToken);
 
   /// adding a listener to changes in the controller
   void addListener(VoidCallback listener);

@@ -10,9 +10,9 @@ import '../models/jwt_tokens.dart';
 // -----------------------------------------------------------------------------
 // -----------------------------------------------------------------------------
 /// the controller that receives events for the authentication repository
-class _AuthenticateController extends ChangeNotifier
+class AuthenticateController extends ChangeNotifier
     implements IAuthenticateController {
-  _AuthenticateController({
+  AuthenticateController({
     required ILocalCache localCache,
   })  : _localCache = localCache,
         _status = _initialAuthenticateStatus;
@@ -38,7 +38,7 @@ class _AuthenticateController extends ChangeNotifier
   // accepts the event that the tokens have been successfully updated
   // receives fresh tokens
   @override
-  Future<void> onAccessTokensUpdated(
+  Future<void> onAuthenticated(
     String accessToken,
     String refreshToken,
   ) async {
@@ -69,21 +69,6 @@ class _AuthenticateController extends ChangeNotifier
     // we inform you about the change
     notifyListeners();
   }
-
-  // ---------------------------------------------------------------------------
-  // accepts the event that you can log in
-  // and receives tokens
-  @override
-  Future<void> onAuthenticated(String accessToken, String refreshToken) async {
-    await _localCache.setAuthTokens(
-        tokens: JwtTokens(access: accessToken, refresh: refreshToken));
-
-    // changing the state
-    _status = AuthenticateStatus.authorized;
-
-    // we inform you about the change
-    notifyListeners();
-  }
 }
 
 // -----------------------------------------------------------------------------
@@ -97,7 +82,7 @@ class AuthenticateRepository implements IAuthenticateRepository {
     IAuthenticateController? controller,
   }) : _localCache = localCache {
     // creating a repository controller
-    _controller = controller ?? _AuthenticateController(localCache: localCache);
+    _controller = controller ?? AuthenticateController(localCache: localCache);
 
     // subscribing to changes in the controller
     _controller.addListener(_onControllerChanged);

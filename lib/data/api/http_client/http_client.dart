@@ -153,7 +153,7 @@ class DioClient {
                   _getTokenWithBearer(receivedAccessToken);
 
               _refreshToken = receivedRefreshToken;
-              await authenticateController?.onAccessTokensUpdated(
+              await authenticateController?.onAuthenticated(
                   receivedAccessToken, receivedRefreshToken);
             } else {
               clearTokens();

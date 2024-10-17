@@ -170,12 +170,12 @@ base class FormField<T> {
   bool _errorOnLengthValidator() {
     // если установлено условие для минимальной длины значения
     if (_minLength != null) {
-      if (_value == null || _value.toString().length < _minLength!) {
+      if (_value == null || _value.toString().length < _minLength) {
         return true;
       }
     }
     if (_maxLength != null) {
-      if (_value != null && _value.toString().length > _maxLength!) {
+      if (_value != null && _value.toString().length > _maxLength) {
         return true;
       }
     }

@@ -15,7 +15,7 @@ class AuthControllerScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Localizations.override(
         context: context,
-        locale: LocaleProvider.of(context)!.locale,
+        locale: LocaleProvider.of(context)?.locale,
         child: BlocProvider<AuthControllerBloc>(
             create: (_) => context.depGen().buildAuthControllerBloc(),
             child: BlocBuilder<AuthControllerBloc, AuthControllerStates>(

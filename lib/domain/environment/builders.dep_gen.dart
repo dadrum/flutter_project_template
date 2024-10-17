@@ -103,7 +103,6 @@ class DepProvider extends InheritedWidget {
   // ---------------------------------------------------------------------------
   AuthControllerBloc buildAuthControllerBloc() => AuthControllerBloc(
         authenticateRepository: _env.g<IAuthenticateRepository>(),
-        api: _env.g<IApiFacade>(),
       );
 
   // ---------------------------------------------------------------------------

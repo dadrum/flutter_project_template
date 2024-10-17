@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../presentation/theme/dynamic_theme.dart';
 import '../../presentation/values/palette.dart';
@@ -55,4 +56,10 @@ extension ContextExtension on BuildContext {
   // ---------------------------------------------------------------------------
   /// Provides a dynamic palette of colors
   Palette? get palette => DynamicTheme.paletteOf(this);
+
+  // ---------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
+  /// Provides a dynamic set of texts and labels
+  AppLocalizations get texts => AppLocalizations.of(this)!;
 }
