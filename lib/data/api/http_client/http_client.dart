@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:developer' as dev;
 import 'dart:io';
@@ -6,7 +7,9 @@ import 'package:dio/dio.dart';
 
 import '../../../domain/interfaces/i_authenticate_repository.dart';
 import 'i_api_request.dart';
+import 'request_canceled.dart';
 import 'request_exception.dart';
+import 'request_timeout_exception.dart';
 
 enum AvailableApiMethods { get, post, put, delete, patch }
 
@@ -30,11 +33,14 @@ class DioClient {
   // ---------------------------------------------------------------------------
   static const bool debugMode = true;
 
-  static const String englishLocaleSettings = 'en-US,en;q=0.9,ru-RU';
-  static const String russianLocaleSettings = 'ru-RU,ru;q=0.9,en-US';
+  static const String englishLocaleSettings = 'en';
+  static const String russianLocaleSettings = 'ru';
 
   // listener for authenticate events
   IAuthenticateController? authenticateController;
+
+  // listener for authenticate events
+  Function(String)? _requestsLogger;
 
   String? _refreshToken;
 
@@ -74,6 +80,8 @@ class DioClient {
     );
     _dio = Dio(_dioOptions);
 
+    _dio?.interceptors.add(loggerInterceptor());
+    _dio?.interceptors.add(invalidAccessTokenInterceptor());
     _dio?.interceptors.add(authErrorInterceptor());
   }
 
@@ -88,6 +96,8 @@ class DioClient {
 
     _dio = Dio(_dioOptions);
 
+    _dio?.interceptors.add(loggerInterceptor());
+    _dio?.interceptors.add(invalidAccessTokenInterceptor());
     _dio?.interceptors.add(authErrorInterceptor());
   }
 
@@ -145,11 +155,16 @@ class DioClient {
               _refreshToken = receivedRefreshToken;
               await authenticateController?.onAccessTokensUpdated(
                   receivedAccessToken, receivedRefreshToken);
+            } else {
+              clearTokens();
+              await authenticateController?.onAuthenticateCanceled();
+              handler.reject(dioError);
+              return;
             }
 
             // если токен был получен - пробуем повторить запрос
             // на котором поучили 401
-            if (receivedAccessToken?.isNotEmpty ?? false) {
+            if (receivedAccessToken.isNotEmpty) {
               try {
                 // only for VERIFY request - change token in DATA
                 final originalRequestData =
@@ -167,7 +182,7 @@ class DioClient {
               } on DioException catch (e) {
                 if ((e.response?.statusCode ?? 0) == HttpStatus.forbidden) {
                   clearTokens();
-                  authenticateController?.onAuthenticateFailed();
+                  await authenticateController?.onAuthenticateCanceled();
                   handler.next(dioError);
                   return;
                 }
@@ -179,6 +194,67 @@ class DioClient {
             return;
           }
           handler.reject(dioError);
+        },
+      );
+
+  // ---------------------------------------------------------------------------
+  InterceptorsWrapper invalidAccessTokenInterceptor() => InterceptorsWrapper(
+        onResponse: (response, handler) {
+          return handler.next(response);
+        },
+        onError: (dioError, handler) async {
+          // если поступила ошибка о том, что токен невалидный
+          if (dioError.response?.statusCode == 418) {
+            clearTokens();
+            unawaited(authenticateController?.onAuthenticateCanceled());
+            handler.reject(dioError);
+          } else {
+            handler.next(dioError);
+          }
+        },
+      );
+
+  // ---------------------------------------------------------------------------
+  QueuedInterceptorsWrapper loggerInterceptor() => QueuedInterceptorsWrapper(
+        onResponse: (response, handler) {
+          final sb = StringBuffer()
+            ..writeln('> HEADERS: ${response.requestOptions.headers}')
+            ..writeln(
+                '> ${response.requestOptions.method}: ${response.requestOptions.path}');
+
+          if (response.requestOptions.data != null) {
+            if (response.requestOptions.data is FormData) {
+              sb.writeln(
+                  '> BODY: ${(response.requestOptions.data as FormData).fields}');
+            } else {
+              sb.writeln('> BODY: ${response.requestOptions.data}');
+            }
+          }
+          sb
+            ..writeln('< STATUS: ${response.statusCode}')
+            ..writeln('< RESPONSE: $response');
+          _requestsLogger?.call(sb.toString());
+          return handler.next(response);
+        },
+        onError: (dioError, handler) async {
+          final sb = StringBuffer()
+            ..writeln('> HEADERS: ${dioError.requestOptions.headers}')
+            ..writeln(
+                '> ${dioError.requestOptions.method}: ${dioError.requestOptions.path}');
+
+          if (dioError.requestOptions.data != null) {
+            if (dioError.requestOptions.data is FormData) {
+              sb.writeln(
+                  '> BODY: ${(dioError.requestOptions.data as FormData).fields}');
+            } else {
+              sb.writeln('> BODY: ${dioError.requestOptions.data}');
+            }
+          }
+          sb
+            ..writeln('< STATUS: ${dioError.response?.statusCode}')
+            ..writeln('< RESPONSE: $dioError');
+          _requestsLogger?.call(sb.toString());
+          return handler.next(dioError);
         },
       );
 
@@ -219,6 +295,11 @@ class DioClient {
   }
 
   // ---------------------------------------------------------------------------
+  void setRequestsLogger(Function(String) requestsLogger) {
+    _requestsLogger = requestsLogger;
+  }
+
+  // ---------------------------------------------------------------------------
   void removeAuthenticateController() {
     authenticateController = null;
   }
@@ -256,7 +337,18 @@ class DioClient {
   }
 
   // ---------------------------------------------------------------------------
-  Future<Response<Object?>?> request(IApiRequest request) async {
+  Future<Response<Object?>?> request(
+    /// request - экземпляр запроса
+    IApiRequest request, {
+    /// Опциональный: getProgress - void Function(double rate), где rate - прогресс выполнения от 0 до 1
+    void Function(double)? receiveProgress,
+
+    /// Фиговина для ручного прекращения выполнения сетевого запроса (применяется для прерывания отправки видео-файлов)
+    CancelToken? cancelTokenForPostData,
+
+    /// Опциональный: postProgress - void Function(double rate), где rate - прогресс выполнения от 0 до 1
+    void Function(double)? sendProgress,
+  }) async {
     if (_dio == null) throw UnimplementedError('Dio is not initialized');
 
     final String url = '$_baseUrl${request.endPoint}';
@@ -264,16 +356,54 @@ class DioClient {
       Response<String> response;
 
       switch (request.methodType) {
-        case AvailableApiMethods.get:
-          response = await _dio!.get<String>(url);
-        case AvailableApiMethods.post:
-          response = await _dio!.post<String>(url, data: request.body);
-        case AvailableApiMethods.put:
-          response = await _dio!.put<String>(url, data: request.body);
         case AvailableApiMethods.delete:
           response = await _dio!.delete<String>(url, data: request.body);
+        case AvailableApiMethods.get:
+          response = await _dio!.get<String>(
+            url,
+            onReceiveProgress: (part, full) => receiveProgress?.call(
+              full == 0 ? 1 : part / full,
+            ),
+            // options: Options(
+            //   responseType: ResponseType.bytes,
+            //   followRedirects: true,
+            //   validateStatus: (s) => s != null && s >= 200 && s < 300,
+            // ),
+          );
+        case AvailableApiMethods.post:
+          response = await _dio!.post<String>(
+            url,
+            data: request.body,
+            cancelToken: cancelTokenForPostData,
+            onSendProgress: (part, full) => sendProgress?.call(
+              full == 0 ? 1 : part / full,
+            ),
+            onReceiveProgress: (part, full) => receiveProgress?.call(
+              full == 0 ? 1 : part / full,
+            ),
+          );
+        case AvailableApiMethods.put:
+          response = await _dio!.put<String>(
+            url,
+            data: request.body,
+            onSendProgress: (part, full) => sendProgress?.call(
+              full == 0 ? 1 : part / full,
+            ),
+            onReceiveProgress: (part, full) => receiveProgress?.call(
+              full == 0 ? 1 : part / full,
+            ),
+          );
         case AvailableApiMethods.patch:
-          response = await _dio!.patch<String>(url, data: request.body);
+          response = await _dio!.patch<String>(
+            url,
+            data: request.body,
+            onSendProgress: (part, full) => sendProgress?.call(
+              full == 0 ? 1 : part / full,
+            ),
+            onReceiveProgress: (part, full) => receiveProgress?.call(
+              full == 0 ? 1 : part / full,
+            ),
+          );
       }
 
       if (debugMode) {
@@ -281,9 +411,34 @@ class DioClient {
       }
 
       return response;
-    } on DioException catch (dioError, stackTrace) {
+    } on DioException catch (dioError, mainStackTrace) {
+      final stackTrace = StackTrace.fromString(
+        'Main stackTrace:\n$mainStackTrace\n'
+        'Dio stackTrace:\n${dioError.stackTrace}',
+      );
+
       if (debugMode) {
         _logger(url, dioError.response, body: request.body);
+      }
+
+      switch (dioError.type) {
+        case DioExceptionType.cancel:
+          Error.throwWithStackTrace(RequestCanceled(), stackTrace);
+        case DioExceptionType.connectionTimeout:
+        case DioExceptionType.sendTimeout:
+        case DioExceptionType.receiveTimeout:
+        case DioExceptionType.connectionError:
+          Error.throwWithStackTrace(
+            RequestTimeoutException(
+              httpStatusCode: dioError.response?.statusCode ?? 0,
+              requestPath: dioError.requestOptions.path,
+              requestData: dioError.requestOptions.data,
+              requestMethod: dioError.requestOptions.method,
+            ),
+            stackTrace,
+          );
+        default:
+        // продолжаем обработку ошибки
       }
 
       Map<String, Object?>? responseBody;
@@ -323,16 +478,17 @@ class DioClient {
         }
       }
       Error.throwWithStackTrace(
-          RequestException(
-            httpStatusCode: dioError.response?.statusCode ?? 0,
-            response: responseBody,
-            responseValues: responseValues,
-            requestPath: dioError.requestOptions.path,
-            requestData: dioError.requestOptions.data,
-            requestMethod: dioError.requestOptions.method,
-            headers: dioError.requestOptions.headers,
-          ),
-          stackTrace);
+        RequestException(
+          httpStatusCode: dioError.response?.statusCode ?? 0,
+          response: responseBody,
+          responseValues: responseValues,
+          requestPath: dioError.requestOptions.path,
+          requestData: dioError.requestOptions.data,
+          requestMethod: dioError.requestOptions.method,
+          headers: dioError.requestOptions.headers,
+        ),
+        stackTrace,
+      );
     } on Object {
       rethrow;
     }

@@ -54,9 +54,11 @@ class SplashScreen extends StatelessWidget {
     FlutterNativeSplash.remove();
 
     if (isFirstStart) {
-      Navigator.of(context).pushReplacementNamed(TopRoute.routeOnBoarding);
+      await Navigator.of(context)
+          .pushReplacementNamed(TopRoute.routeOnBoarding);
     } else {
-      Navigator.of(context).pushReplacementNamed(TopRoute.routeAuthController);
+      await Navigator.of(context)
+          .pushReplacementNamed(TopRoute.routeAuthController);
     }
   }
 }

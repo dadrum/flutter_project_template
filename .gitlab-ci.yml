@@ -15,13 +15,15 @@ workflow:
       when: always
 
 dart-formatter:
-  image: mobiledevops/flutter-sdk-image:3.10.1
+  #  image: mobiledevops/flutter-sdk-image:3.10.3
+  image: growerp/flutter-sdk-image:3.22.1
   stage: check:static
   interruptible: true
   script: dart format --set-exit-if-changed .
 
 dart-analyzer:
-  image: mobiledevops/flutter-sdk-image:3.10.1
+  #  image: mobiledevops/flutter-sdk-image:3.10.3
+  image: growerp/flutter-sdk-image:3.22.1
   stage: check:static
   interruptible: true
   script:
@@ -29,13 +31,14 @@ dart-analyzer:
     - flutter analyze --fatal-infos --fatal-warnings
 
 code-generation-mismatch-check:
-  image: mobiledevops/flutter-sdk-image:3.10.1
+  #  image: mobiledevops/flutter-sdk-image:3.10.3
+  image: growerp/flutter-sdk-image:3.22.1
   stage: check:static
   interruptible: true
   script:
     - rm pubspec.lock
     - flutter pub get
-    - flutter pub run dep_gen:generate -p lib/domain/environment -o di.dart -c Di
+    - flutter pub run dep_gen:generate -p lib/domain/environment
     - flutter pub run build_runner build --delete-conflicting-outputs --fail-on-severe
     - (( $(git status --untracked-files=no --porcelain|wc -l) == 0 )) || { echo >&2 "Some changes in generated files detected"; exit 1; }
 
@@ -52,7 +55,8 @@ code-generation-mismatch-check:
 #    - flutter drive --profile --cache-sksl --purge-persistent-cache --write-sksl-on-exit flutter_shaders_warm_up_data.sksl.json --driver=test_driver/integration_test.dart --target=test/shaders_warm_up_test.dart
 
 tests:
-  image: mobiledevops/flutter-sdk-image:3.10.1
+  #  image: mobiledevops/flutter-sdk-image:3.10.3
+  image: growerp/flutter-sdk-image:3.22.1
   stage: check:tests
   script:
     - flutter test

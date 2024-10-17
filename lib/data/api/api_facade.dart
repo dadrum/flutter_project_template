@@ -4,7 +4,7 @@ import 'package:dio/dio.dart';
 
 import '../../domain/interfaces/i_api_facade.dart';
 import '../../domain/interfaces/i_authenticate_repository.dart';
-import '../../domain/models/tokens_pair.dart';
+import '../../domain/models/jwt_tokens.dart';
 import 'http_client/http_client.dart';
 import 'mapper/mapper.dart';
 import 'model/requests/request_auth.dart';
@@ -62,7 +62,7 @@ class ApiFacade implements IApiFacade {
   // ---------------------------------------------------------------------------
   // user authenticate
   @override
-  Future<TokensPair> auth({
+  Future<JwtTokens> auth({
     required String login,
     required String password,
   }) async {
@@ -79,7 +79,7 @@ class ApiFacade implements IApiFacade {
   // ---------------------------------------------------------------------------
   // update tokens pair by refresh token
   @override
-  Future<TokensPair> refreshTokens({required String refreshToken}) async {
+  Future<JwtTokens> refreshTokens({required String refreshToken}) async {
     final _Response response = await httpClient.request(
       RequestRefreshTokens(refreshToken: refreshToken),
     );

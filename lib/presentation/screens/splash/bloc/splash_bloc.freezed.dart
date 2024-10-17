@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'splash_bloc.dart';
 
@@ -12,7 +12,7 @@ part of 'splash_bloc.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$SplashEvents {
@@ -23,7 +23,7 @@ mixin _$SplashEvents {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initialize,
+    TResult? Function()? initialize,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -39,7 +39,7 @@ mixin _$SplashEvents {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_EventInitialize value)? initialize,
+    TResult? Function(_EventInitialize value)? initialize,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -54,41 +54,46 @@ mixin _$SplashEvents {
 abstract class $SplashEventsCopyWith<$Res> {
   factory $SplashEventsCopyWith(
           SplashEvents value, $Res Function(SplashEvents) then) =
-      _$SplashEventsCopyWithImpl<$Res>;
+      _$SplashEventsCopyWithImpl<$Res, SplashEvents>;
 }
 
 /// @nodoc
-class _$SplashEventsCopyWithImpl<$Res> implements $SplashEventsCopyWith<$Res> {
+class _$SplashEventsCopyWithImpl<$Res, $Val extends SplashEvents>
+    implements $SplashEventsCopyWith<$Res> {
   _$SplashEventsCopyWithImpl(this._value, this._then);
 
-  final SplashEvents _value;
   // ignore: unused_field
-  final $Res Function(SplashEvents) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  /// Create a copy of SplashEvents
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
-abstract class _$$_EventInitializeCopyWith<$Res> {
-  factory _$$_EventInitializeCopyWith(
-          _$_EventInitialize value, $Res Function(_$_EventInitialize) then) =
-      __$$_EventInitializeCopyWithImpl<$Res>;
+abstract class _$$EventInitializeImplCopyWith<$Res> {
+  factory _$$EventInitializeImplCopyWith(_$EventInitializeImpl value,
+          $Res Function(_$EventInitializeImpl) then) =
+      __$$EventInitializeImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$_EventInitializeCopyWithImpl<$Res>
-    extends _$SplashEventsCopyWithImpl<$Res>
-    implements _$$_EventInitializeCopyWith<$Res> {
-  __$$_EventInitializeCopyWithImpl(
-      _$_EventInitialize _value, $Res Function(_$_EventInitialize) _then)
-      : super(_value, (v) => _then(v as _$_EventInitialize));
+class __$$EventInitializeImplCopyWithImpl<$Res>
+    extends _$SplashEventsCopyWithImpl<$Res, _$EventInitializeImpl>
+    implements _$$EventInitializeImplCopyWith<$Res> {
+  __$$EventInitializeImplCopyWithImpl(
+      _$EventInitializeImpl _value, $Res Function(_$EventInitializeImpl) _then)
+      : super(_value, _then);
 
-  @override
-  _$_EventInitialize get _value => super._value as _$_EventInitialize;
+  /// Create a copy of SplashEvents
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
 
-class _$_EventInitialize implements _EventInitialize {
-  const _$_EventInitialize();
+class _$EventInitializeImpl implements _EventInitialize {
+  const _$EventInitializeImpl();
 
   @override
   String toString() {
@@ -96,9 +101,9 @@ class _$_EventInitialize implements _EventInitialize {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_EventInitialize);
+        (other.runtimeType == runtimeType && other is _$EventInitializeImpl);
   }
 
   @override
@@ -115,7 +120,7 @@ class _$_EventInitialize implements _EventInitialize {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initialize,
+    TResult? Function()? initialize,
   }) {
     return initialize?.call();
   }
@@ -143,7 +148,7 @@ class _$_EventInitialize implements _EventInitialize {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_EventInitialize value)? initialize,
+    TResult? Function(_EventInitialize value)? initialize,
   }) {
     return initialize?.call(this);
   }
@@ -162,7 +167,7 @@ class _$_EventInitialize implements _EventInitialize {
 }
 
 abstract class _EventInitialize implements SplashEvents {
-  const factory _EventInitialize() = _$_EventInitialize;
+  const factory _EventInitialize() = _$EventInitializeImpl;
 }
 
 /// @nodoc
@@ -176,9 +181,9 @@ mixin _$SplashStates {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? notInitialized,
-    TResult Function(bool isFirstStart)? initializationCompleted,
-    TResult Function(String locale)? initializeLocale,
+    TResult? Function()? notInitialized,
+    TResult? Function(bool isFirstStart)? initializationCompleted,
+    TResult? Function(String locale)? initializeLocale,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -199,10 +204,10 @@ mixin _$SplashStates {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_StateNotInitialized value)? notInitialized,
-    TResult Function(_StateInitializationCompleted value)?
+    TResult? Function(_StateNotInitialized value)? notInitialized,
+    TResult? Function(_StateInitializationCompleted value)?
         initializationCompleted,
-    TResult Function(_StateInitializeLocale value)? initializeLocale,
+    TResult? Function(_StateInitializeLocale value)? initializeLocale,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -220,41 +225,46 @@ mixin _$SplashStates {
 abstract class $SplashStatesCopyWith<$Res> {
   factory $SplashStatesCopyWith(
           SplashStates value, $Res Function(SplashStates) then) =
-      _$SplashStatesCopyWithImpl<$Res>;
+      _$SplashStatesCopyWithImpl<$Res, SplashStates>;
 }
 
 /// @nodoc
-class _$SplashStatesCopyWithImpl<$Res> implements $SplashStatesCopyWith<$Res> {
+class _$SplashStatesCopyWithImpl<$Res, $Val extends SplashStates>
+    implements $SplashStatesCopyWith<$Res> {
   _$SplashStatesCopyWithImpl(this._value, this._then);
 
-  final SplashStates _value;
   // ignore: unused_field
-  final $Res Function(SplashStates) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  /// Create a copy of SplashStates
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
-abstract class _$$_StateNotInitializedCopyWith<$Res> {
-  factory _$$_StateNotInitializedCopyWith(_$_StateNotInitialized value,
-          $Res Function(_$_StateNotInitialized) then) =
-      __$$_StateNotInitializedCopyWithImpl<$Res>;
+abstract class _$$StateNotInitializedImplCopyWith<$Res> {
+  factory _$$StateNotInitializedImplCopyWith(_$StateNotInitializedImpl value,
+          $Res Function(_$StateNotInitializedImpl) then) =
+      __$$StateNotInitializedImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$_StateNotInitializedCopyWithImpl<$Res>
-    extends _$SplashStatesCopyWithImpl<$Res>
-    implements _$$_StateNotInitializedCopyWith<$Res> {
-  __$$_StateNotInitializedCopyWithImpl(_$_StateNotInitialized _value,
-      $Res Function(_$_StateNotInitialized) _then)
-      : super(_value, (v) => _then(v as _$_StateNotInitialized));
+class __$$StateNotInitializedImplCopyWithImpl<$Res>
+    extends _$SplashStatesCopyWithImpl<$Res, _$StateNotInitializedImpl>
+    implements _$$StateNotInitializedImplCopyWith<$Res> {
+  __$$StateNotInitializedImplCopyWithImpl(_$StateNotInitializedImpl _value,
+      $Res Function(_$StateNotInitializedImpl) _then)
+      : super(_value, _then);
 
-  @override
-  _$_StateNotInitialized get _value => super._value as _$_StateNotInitialized;
+  /// Create a copy of SplashStates
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
 
-class _$_StateNotInitialized implements _StateNotInitialized {
-  const _$_StateNotInitialized();
+class _$StateNotInitializedImpl implements _StateNotInitialized {
+  const _$StateNotInitializedImpl();
 
   @override
   String toString() {
@@ -262,9 +272,10 @@ class _$_StateNotInitialized implements _StateNotInitialized {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_StateNotInitialized);
+        (other.runtimeType == runtimeType &&
+            other is _$StateNotInitializedImpl);
   }
 
   @override
@@ -283,9 +294,9 @@ class _$_StateNotInitialized implements _StateNotInitialized {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? notInitialized,
-    TResult Function(bool isFirstStart)? initializationCompleted,
-    TResult Function(String locale)? initializeLocale,
+    TResult? Function()? notInitialized,
+    TResult? Function(bool isFirstStart)? initializationCompleted,
+    TResult? Function(String locale)? initializeLocale,
   }) {
     return notInitialized?.call();
   }
@@ -318,10 +329,10 @@ class _$_StateNotInitialized implements _StateNotInitialized {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_StateNotInitialized value)? notInitialized,
-    TResult Function(_StateInitializationCompleted value)?
+    TResult? Function(_StateNotInitialized value)? notInitialized,
+    TResult? Function(_StateInitializationCompleted value)?
         initializationCompleted,
-    TResult Function(_StateInitializeLocale value)? initializeLocale,
+    TResult? Function(_StateInitializeLocale value)? initializeLocale,
   }) {
     return notInitialized?.call(this);
   }
@@ -343,37 +354,37 @@ class _$_StateNotInitialized implements _StateNotInitialized {
 }
 
 abstract class _StateNotInitialized implements SplashStates {
-  const factory _StateNotInitialized() = _$_StateNotInitialized;
+  const factory _StateNotInitialized() = _$StateNotInitializedImpl;
 }
 
 /// @nodoc
-abstract class _$$_StateInitializationCompletedCopyWith<$Res> {
-  factory _$$_StateInitializationCompletedCopyWith(
-          _$_StateInitializationCompleted value,
-          $Res Function(_$_StateInitializationCompleted) then) =
-      __$$_StateInitializationCompletedCopyWithImpl<$Res>;
+abstract class _$$StateInitializationCompletedImplCopyWith<$Res> {
+  factory _$$StateInitializationCompletedImplCopyWith(
+          _$StateInitializationCompletedImpl value,
+          $Res Function(_$StateInitializationCompletedImpl) then) =
+      __$$StateInitializationCompletedImplCopyWithImpl<$Res>;
+  @useResult
   $Res call({bool isFirstStart});
 }
 
 /// @nodoc
-class __$$_StateInitializationCompletedCopyWithImpl<$Res>
-    extends _$SplashStatesCopyWithImpl<$Res>
-    implements _$$_StateInitializationCompletedCopyWith<$Res> {
-  __$$_StateInitializationCompletedCopyWithImpl(
-      _$_StateInitializationCompleted _value,
-      $Res Function(_$_StateInitializationCompleted) _then)
-      : super(_value, (v) => _then(v as _$_StateInitializationCompleted));
+class __$$StateInitializationCompletedImplCopyWithImpl<$Res>
+    extends _$SplashStatesCopyWithImpl<$Res, _$StateInitializationCompletedImpl>
+    implements _$$StateInitializationCompletedImplCopyWith<$Res> {
+  __$$StateInitializationCompletedImplCopyWithImpl(
+      _$StateInitializationCompletedImpl _value,
+      $Res Function(_$StateInitializationCompletedImpl) _then)
+      : super(_value, _then);
 
-  @override
-  _$_StateInitializationCompleted get _value =>
-      super._value as _$_StateInitializationCompleted;
-
+  /// Create a copy of SplashStates
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? isFirstStart = freezed,
+    Object? isFirstStart = null,
   }) {
-    return _then(_$_StateInitializationCompleted(
-      isFirstStart: isFirstStart == freezed
+    return _then(_$StateInitializationCompletedImpl(
+      isFirstStart: null == isFirstStart
           ? _value.isFirstStart
           : isFirstStart // ignore: cast_nullable_to_non_nullable
               as bool,
@@ -383,8 +394,9 @@ class __$$_StateInitializationCompletedCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_StateInitializationCompleted implements _StateInitializationCompleted {
-  const _$_StateInitializationCompleted({required this.isFirstStart});
+class _$StateInitializationCompletedImpl
+    implements _StateInitializationCompleted {
+  const _$StateInitializationCompletedImpl({required this.isFirstStart});
 
   @override
   final bool isFirstStart;
@@ -395,23 +407,26 @@ class _$_StateInitializationCompleted implements _StateInitializationCompleted {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_StateInitializationCompleted &&
-            const DeepCollectionEquality()
-                .equals(other.isFirstStart, isFirstStart));
+            other is _$StateInitializationCompletedImpl &&
+            (identical(other.isFirstStart, isFirstStart) ||
+                other.isFirstStart == isFirstStart));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(isFirstStart));
+  int get hashCode => Object.hash(runtimeType, isFirstStart);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of SplashStates
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  _$$_StateInitializationCompletedCopyWith<_$_StateInitializationCompleted>
-      get copyWith => __$$_StateInitializationCompletedCopyWithImpl<
-          _$_StateInitializationCompleted>(this, _$identity);
+  @pragma('vm:prefer-inline')
+  _$$StateInitializationCompletedImplCopyWith<
+          _$StateInitializationCompletedImpl>
+      get copyWith => __$$StateInitializationCompletedImplCopyWithImpl<
+          _$StateInitializationCompletedImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -426,9 +441,9 @@ class _$_StateInitializationCompleted implements _StateInitializationCompleted {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? notInitialized,
-    TResult Function(bool isFirstStart)? initializationCompleted,
-    TResult Function(String locale)? initializeLocale,
+    TResult? Function()? notInitialized,
+    TResult? Function(bool isFirstStart)? initializationCompleted,
+    TResult? Function(String locale)? initializeLocale,
   }) {
     return initializationCompleted?.call(isFirstStart);
   }
@@ -461,10 +476,10 @@ class _$_StateInitializationCompleted implements _StateInitializationCompleted {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_StateNotInitialized value)? notInitialized,
-    TResult Function(_StateInitializationCompleted value)?
+    TResult? Function(_StateNotInitialized value)? notInitialized,
+    TResult? Function(_StateInitializationCompleted value)?
         initializationCompleted,
-    TResult Function(_StateInitializeLocale value)? initializeLocale,
+    TResult? Function(_StateInitializeLocale value)? initializeLocale,
   }) {
     return initializationCompleted?.call(this);
   }
@@ -487,40 +502,45 @@ class _$_StateInitializationCompleted implements _StateInitializationCompleted {
 
 abstract class _StateInitializationCompleted implements SplashStates {
   const factory _StateInitializationCompleted(
-      {required final bool isFirstStart}) = _$_StateInitializationCompleted;
+      {required final bool isFirstStart}) = _$StateInitializationCompletedImpl;
 
   bool get isFirstStart;
-  @JsonKey(ignore: true)
-  _$$_StateInitializationCompletedCopyWith<_$_StateInitializationCompleted>
+
+  /// Create a copy of SplashStates
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$StateInitializationCompletedImplCopyWith<
+          _$StateInitializationCompletedImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$_StateInitializeLocaleCopyWith<$Res> {
-  factory _$$_StateInitializeLocaleCopyWith(_$_StateInitializeLocale value,
-          $Res Function(_$_StateInitializeLocale) then) =
-      __$$_StateInitializeLocaleCopyWithImpl<$Res>;
+abstract class _$$StateInitializeLocaleImplCopyWith<$Res> {
+  factory _$$StateInitializeLocaleImplCopyWith(
+          _$StateInitializeLocaleImpl value,
+          $Res Function(_$StateInitializeLocaleImpl) then) =
+      __$$StateInitializeLocaleImplCopyWithImpl<$Res>;
+  @useResult
   $Res call({String locale});
 }
 
 /// @nodoc
-class __$$_StateInitializeLocaleCopyWithImpl<$Res>
-    extends _$SplashStatesCopyWithImpl<$Res>
-    implements _$$_StateInitializeLocaleCopyWith<$Res> {
-  __$$_StateInitializeLocaleCopyWithImpl(_$_StateInitializeLocale _value,
-      $Res Function(_$_StateInitializeLocale) _then)
-      : super(_value, (v) => _then(v as _$_StateInitializeLocale));
+class __$$StateInitializeLocaleImplCopyWithImpl<$Res>
+    extends _$SplashStatesCopyWithImpl<$Res, _$StateInitializeLocaleImpl>
+    implements _$$StateInitializeLocaleImplCopyWith<$Res> {
+  __$$StateInitializeLocaleImplCopyWithImpl(_$StateInitializeLocaleImpl _value,
+      $Res Function(_$StateInitializeLocaleImpl) _then)
+      : super(_value, _then);
 
-  @override
-  _$_StateInitializeLocale get _value =>
-      super._value as _$_StateInitializeLocale;
-
+  /// Create a copy of SplashStates
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? locale = freezed,
+    Object? locale = null,
   }) {
-    return _then(_$_StateInitializeLocale(
-      locale: locale == freezed
+    return _then(_$StateInitializeLocaleImpl(
+      locale: null == locale
           ? _value.locale
           : locale // ignore: cast_nullable_to_non_nullable
               as String,
@@ -530,8 +550,8 @@ class __$$_StateInitializeLocaleCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_StateInitializeLocale implements _StateInitializeLocale {
-  const _$_StateInitializeLocale({required this.locale});
+class _$StateInitializeLocaleImpl implements _StateInitializeLocale {
+  const _$StateInitializeLocaleImpl({required this.locale});
 
   @override
   final String locale;
@@ -542,22 +562,24 @@ class _$_StateInitializeLocale implements _StateInitializeLocale {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_StateInitializeLocale &&
-            const DeepCollectionEquality().equals(other.locale, locale));
+            other is _$StateInitializeLocaleImpl &&
+            (identical(other.locale, locale) || other.locale == locale));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(locale));
+  int get hashCode => Object.hash(runtimeType, locale);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of SplashStates
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  _$$_StateInitializeLocaleCopyWith<_$_StateInitializeLocale> get copyWith =>
-      __$$_StateInitializeLocaleCopyWithImpl<_$_StateInitializeLocale>(
-          this, _$identity);
+  @pragma('vm:prefer-inline')
+  _$$StateInitializeLocaleImplCopyWith<_$StateInitializeLocaleImpl>
+      get copyWith => __$$StateInitializeLocaleImplCopyWithImpl<
+          _$StateInitializeLocaleImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -572,9 +594,9 @@ class _$_StateInitializeLocale implements _StateInitializeLocale {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? notInitialized,
-    TResult Function(bool isFirstStart)? initializationCompleted,
-    TResult Function(String locale)? initializeLocale,
+    TResult? Function()? notInitialized,
+    TResult? Function(bool isFirstStart)? initializationCompleted,
+    TResult? Function(String locale)? initializeLocale,
   }) {
     return initializeLocale?.call(locale);
   }
@@ -607,10 +629,10 @@ class _$_StateInitializeLocale implements _StateInitializeLocale {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_StateNotInitialized value)? notInitialized,
-    TResult Function(_StateInitializationCompleted value)?
+    TResult? Function(_StateNotInitialized value)? notInitialized,
+    TResult? Function(_StateInitializationCompleted value)?
         initializationCompleted,
-    TResult Function(_StateInitializeLocale value)? initializeLocale,
+    TResult? Function(_StateInitializeLocale value)? initializeLocale,
   }) {
     return initializeLocale?.call(this);
   }
@@ -633,10 +655,13 @@ class _$_StateInitializeLocale implements _StateInitializeLocale {
 
 abstract class _StateInitializeLocale implements SplashStates {
   const factory _StateInitializeLocale({required final String locale}) =
-      _$_StateInitializeLocale;
+      _$StateInitializeLocaleImpl;
 
   String get locale;
-  @JsonKey(ignore: true)
-  _$$_StateInitializeLocaleCopyWith<_$_StateInitializeLocale> get copyWith =>
-      throw _privateConstructorUsedError;
+
+  /// Create a copy of SplashStates
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$StateInitializeLocaleImplCopyWith<_$StateInitializeLocaleImpl>
+      get copyWith => throw _privateConstructorUsedError;
 }

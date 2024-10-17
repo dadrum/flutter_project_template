@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/foundation.dart';
 
-import '../models/tokens_pair.dart';
+import '../models/jwt_tokens.dart';
 
 // допустимые состояния аутентификации пользователя
 enum AuthenticateStatus {
@@ -18,38 +18,38 @@ abstract class IAuthenticateController {
   /// какой статус авторизации был последним
   AuthenticateStatus get status;
 
-  /// принимает событие о том, что удалоь авторизоваться
-  /// и получает токены
+  /// accepts the event that you can log in
+  /// and receives tokens
   Future<void> onAuthenticated(String accessToken, String refreshToken);
 
-  /// принимает событие о том, что аутентификация не удалась
-  Future<void> onAuthenticateFailed();
+  /// accepts the event that authentication failed
+  Future<void> onAuthenticateCanceled();
 
-  /// принимает событие о том, что токены успешно обновлены
-  /// получает свежие токены
+  /// accepts the event that the tokens have been successfully updated
+  /// receives fresh tokens
   Future<void> onAccessTokensUpdated(String accessToken, String refreshToken);
 
-  /// добавляем слушателя на изменения в контроллере
+  /// adding a listener to changes in the controller
   void addListener(VoidCallback listener);
 
-  /// удаляем слушателя изменений в контроллере
+  /// deleting the listener for changes in the controller
   void removeListener(VoidCallback listener);
 }
 
 // -----------------------------------------------------------------------------
-/// репозиторий аутентификации
+/// authentication repository
 abstract class IAuthenticateRepository {
   IAuthenticateController get controller;
 
-  /// закрытие репозитория, закрытие стримов
+  /// closing the repository, closing streams
   Future<void> close();
 
-  /// подписка на изменения в репозитории
+  /// subscribing to changes in the repository
   AuthenticateSubscription subscribe(Function(AuthenticateStatus) listener);
 
-  /// чтение кешированных токенов
-  Future<TokensPair?> getCachedTokens();
+  /// reading cached tokens
+  Future<JwtTokens?> getCachedTokens();
 
-  /// выход из системы с очисткой токенов
+  /// logging out with token clearing
   Future<void> logout();
 }

@@ -8,16 +8,19 @@ import 'builders.dep_gen.dart';
 
 class Environment extends DepGenEnvironment {
   Future<Environment> prepare() async {
+    // -------------------------------------------------------------------------
+    // #DATA: local cache
     final ILocalCache localCache = LocalCache();
     registry<ILocalCache>(localCache);
 
-    // Репозиторий аутентификации
+    // -------------------------------------------------------------------------
+    // #DOMAIN: Authentication Repository
     final IAuthenticateRepository authenticateRepository =
         AuthenticateRepository(localCache: localCache);
     registry<IAuthenticateRepository>(authenticateRepository);
 
     // -------------------------------------------------------------------------
-    // http клиент
+    // #DATA: http client
     final IApiFacade api = ApiFacade()
       ..setAuthenticateController(authenticateRepository.controller);
     registry<IApiFacade>(api);

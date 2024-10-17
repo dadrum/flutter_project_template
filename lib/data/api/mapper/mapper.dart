@@ -1,13 +1,11 @@
-import '../../../domain/models/tokens_pair.dart';
+import '../../../domain/models/jwt_tokens.dart';
 import '../model/responses/tokens_pair_dto.dart';
 
 // MAP RESPONSES
 class ApiDataMapper {
   // ---------------------------------------------------------------------------
-  TokensPair mapTokensPair(TokensPairDto dto) {
-    return TokensPair(
-      refreshToken: dto.refreshToken,
-      accessToken: dto.token,
-    );
-  }
+  JwtTokens mapTokensPair(TokensPairDto dto) => JwtTokens(
+        refresh: dto.refreshToken,
+        access: dto.token,
+      );
 }

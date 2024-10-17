@@ -8,7 +8,7 @@ import '../../../../data/api/http_client/request_exception.dart';
 import '../../../../domain/interfaces/i_api_facade.dart';
 import '../../../../domain/interfaces/i_authenticate_repository.dart';
 import '../../../../domain/interfaces/i_local_cache.dart';
-import '../../../../domain/models/tokens_pair.dart';
+import '../../../../domain/models/jwt_tokens.dart';
 
 part 'events.dart';
 
@@ -39,7 +39,7 @@ class SplashBloc extends Bloc<SplashEvents, SplashStates> {
     final bool isFirstStart = await checkIsFirstAppStart(emitter);
 
     // get saved tokens
-    final TokensPair? cachedTokens = await getCachedTokens(emitter);
+    final JwtTokens? cachedTokens = await getCachedTokens(emitter);
 
     if (cachedTokens == null) {
       emitter(SplashStates.initializationCompleted(isFirstStart: isFirstStart));
@@ -56,22 +56,7 @@ class SplashBloc extends Bloc<SplashEvents, SplashStates> {
   // determinate - is first app start ?
   Future<bool> checkIsFirstAppStart(Emitter<SplashStates> emitter) async {
     try {
-      bool isFirstStart = await localCache.isFirstAppStart();
-      if (!isFirstStart) {
-        final selectedLocale = await localCache.getSavedLocale();
-        if (selectedLocale == null) {
-          // if there no any cached locale settings - set the first start flag
-          isFirstStart = true;
-        } else {
-          if (!emitter.isDone) {
-            emitter(SplashStates.initializeLocale(locale: selectedLocale));
-          }
-          // set api requests locale
-          if (selectedLocale.isNotEmpty) {
-            api.setLocale(selectedLocale);
-          }
-        }
-      }
+      final isFirstStart = await localCache.isFirstAppStart();
       return isFirstStart;
     } on Object catch (e, s) {
       Error.throwWithStackTrace(
@@ -81,7 +66,7 @@ class SplashBloc extends Bloc<SplashEvents, SplashStates> {
 
   // ---------------------------------------------------------------------------
   // get saved tokens
-  Future<TokensPair?> getCachedTokens(Emitter<SplashStates> emitter) async {
+  Future<JwtTokens?> getCachedTokens(Emitter<SplashStates> emitter) async {
     try {
       return await localCache.getAuthTokens();
     } on Object catch (e, s) {
@@ -94,21 +79,21 @@ class SplashBloc extends Bloc<SplashEvents, SplashStates> {
   // update token and dependencies
   Future<void> updateTokens(
     Emitter<SplashStates> emitter,
-    TokensPair tokensPair,
+    JwtTokens tokensPair,
     bool isFirstStart,
   ) async {
     try {
-      final TokensPair newTokens =
-          await api.refreshTokens(refreshToken: tokensPair.refreshToken);
+      final JwtTokens newTokens =
+          await api.refreshTokens(refreshToken: tokensPair.refresh);
 
       // cache new tokens
       await authenticateRepository.controller.onAccessTokensUpdated(
-        newTokens.accessToken,
-        newTokens.refreshToken,
+        newTokens.access,
+        newTokens.refresh,
       );
 
       // update http-client
-      await api.setTokens(newTokens.accessToken, newTokens.refreshToken);
+      await api.setTokens(newTokens.access, newTokens.refresh);
 
       // set state with initialization complete
       if (!emitter.isDone) {

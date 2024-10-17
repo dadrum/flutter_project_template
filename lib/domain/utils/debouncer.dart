@@ -8,6 +8,7 @@ class Debouncer<T> {
         _period = period;
   static const int defaultPeriod = 1000;
 
+  // ---------------------------------------------------------------------------
   Timer? _debounceTimer;
 
   final int _period;
@@ -16,6 +17,7 @@ class Debouncer<T> {
 
   T? get cachedObject => _cachedObject;
 
+  // ---------------------------------------------------------------------------
   void onEvent(T? newObject, {int? period}) {
     final isCleared = T is! String
         ? newObject == null && _cachedObject != null
@@ -37,6 +39,7 @@ class Debouncer<T> {
     }
   }
 
+  // ---------------------------------------------------------------------------
   void dispose() {
     _debounceTimer?.cancel();
   }

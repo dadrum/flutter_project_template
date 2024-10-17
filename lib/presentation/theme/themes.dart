@@ -16,19 +16,19 @@ class ThemeBuilder {
   // ---------------------------------------------------------------------------
   static Palette getPalette(ThemeTypes type) {
     switch (type) {
-      case ThemeTypes.day:
-        return Palette.day();
-      case ThemeTypes.night:
-        return Palette.night();
+      case ThemeTypes.light:
+        return Palette.light();
+      case ThemeTypes.dark:
+        return Palette.dark();
     }
   }
 
   // ---------------------------------------------------------------------------
   static ThemeData getTheme(ThemeTypes type, Palette palette) {
     switch (type) {
-      case ThemeTypes.day:
+      case ThemeTypes.light:
         return _getDayTheme(palette);
-      case ThemeTypes.night:
+      case ThemeTypes.dark:
         return _getNightTheme(palette);
     }
   }
@@ -58,13 +58,12 @@ class ThemeBuilder {
 
         colorScheme: ColorScheme.fromSwatch(
           primarySwatch: palette.primarySwatch,
-          primaryColorDark: palette.primarySwatch.shade600,
           accentColor: palette.red,
           cardColor: palette.black1,
           backgroundColor: palette.black1,
           errorColor: palette.red,
           brightness: Brightness.dark,
-        ).copyWith(surfaceVariant: Colors.transparent),
+        ).copyWith(surfaceContainerHighest: Colors.transparent),
 
         splashColor: palette.orange.withOpacity(0.06),
         highlightColor: palette.orange.withOpacity(0.06),
@@ -151,8 +150,8 @@ class ThemeBuilder {
 
         textButtonTheme: TextButtonThemeData(
           style: ButtonStyle(
-            overlayColor: MaterialStatePropertyAll<Color>(
-                palette.orange.withOpacity(0.06)),
+            overlayColor:
+                WidgetStatePropertyAll<Color>(palette.orange.withOpacity(0.06)),
           ),
         ),
 
@@ -261,13 +260,12 @@ class ThemeBuilder {
 
         colorScheme: ColorScheme.fromSwatch(
           primarySwatch: palette.primarySwatch,
-          primaryColorDark: palette.primarySwatch.shade600,
           accentColor: palette.red,
           cardColor: palette.black1,
           backgroundColor: palette.black1,
           errorColor: palette.red,
           brightness: Brightness.dark,
-        ).copyWith(surfaceVariant: Colors.transparent),
+        ).copyWith(surfaceContainerHighest: Colors.transparent),
 
         splashColor: palette.orange.withOpacity(0.06),
         highlightColor: palette.orange.withOpacity(0.06),
@@ -342,8 +340,8 @@ class ThemeBuilder {
 
         textButtonTheme: TextButtonThemeData(
           style: ButtonStyle(
-            overlayColor: MaterialStatePropertyAll<Color>(
-                palette.orange.withOpacity(0.06)),
+            overlayColor:
+                WidgetStatePropertyAll<Color>(palette.orange.withOpacity(0.06)),
           ),
         ),
 

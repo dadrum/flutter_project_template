@@ -1,1 +1,1 @@
-enum ThemeTypes { day, night }
+enum ThemeTypes { light, dark }

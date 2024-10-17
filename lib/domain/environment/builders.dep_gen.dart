@@ -12,9 +12,11 @@ import 'package:flutter/widgets.dart';
 
 import 'package:app_template/domain/interfaces/i_api_facade.dart';
 import 'package:app_template/domain/interfaces/i_local_cache.dart';
+import 'package:app_template/domain/interfaces/i_error_logger.dart';
 import 'package:app_template/domain/interfaces/i_authenticate_repository.dart';
 import 'package:app_template/presentation/navigation/auth_controller/bloc/auth_controller_bloc.dart';
 import 'package:app_template/presentation/screens/splash/bloc/splash_bloc.dart';
+import 'package:app_template/presentation/screens/developer_widgets/app_logger/bloc/app_logger_bloc.dart';
 
 /// The environment in which all used dependency instances are configured
 @immutable
@@ -109,5 +111,10 @@ class DepProvider extends InheritedWidget {
         authenticateRepository: _env.g<IAuthenticateRepository>(),
         localCache: _env.g<ILocalCache>(),
         api: _env.g<IApiFacade>(),
+      );
+
+  // ---------------------------------------------------------------------------
+  AppLoggerBloc buildAppLoggerBloc() => AppLoggerBloc(
+        errorLogger: _env.g<IErrorLogger>(),
       );
 }

@@ -13,11 +13,11 @@ class RequestAuth extends IApiRequest {
           url: '/users/auth',
         );
 
-  // данные запроса
+  // Request data
   final String login;
   final String password;
 
-  // Тело запроса
+  // Request body
   @override
   Map<String, Object?>? get body => {
         'email': login,

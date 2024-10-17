@@ -37,8 +37,8 @@ class AuthControllerBloc
   // ---------------------------------------------------------------------------
   @override
   Future<void> close() async {
-    _authenticateSubscription?.cancel();
-    super.close();
+    await _authenticateSubscription?.cancel();
+    await super.close();
   }
 
   // ---------------------------------------------------------------------------

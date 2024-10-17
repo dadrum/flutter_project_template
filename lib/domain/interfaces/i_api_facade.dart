@@ -1,6 +1,6 @@
 import '../../../data/api/mapper/mapper.dart';
 
-import '../models/tokens_pair.dart';
+import '../models/jwt_tokens.dart';
 import 'i_authenticate_repository.dart';
 
 abstract class IApiFacade {
@@ -30,8 +30,8 @@ abstract class IApiFacade {
   // ---------------------------------------------------------------------------
 
   // user authenticate
-  Future<TokensPair> auth({required String login, required String password});
+  Future<JwtTokens> auth({required String login, required String password});
 
   // update tokens pair by refresh token
-  Future<TokensPair> refreshTokens({required String refreshToken});
+  Future<JwtTokens> refreshTokens({required String refreshToken});
 }

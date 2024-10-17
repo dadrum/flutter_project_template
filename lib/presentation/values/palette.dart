@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 // https://gist.github.com/lopspower/03fb1cc0ac9f32ef38f4 - opacity to color table
 
 class Palette {
-  Palette.night()
+  Palette.dark()
       : palettePrimaryValue = 0xFF2A81CD,
         primarySwatch = const MaterialColor(0xFFFF0000, <int, Color>{
           50: Color(0xFFffe0e0),
@@ -19,7 +19,7 @@ class Palette {
           900: Color(0xFFff0000),
         }),
 
-        // Палитра макета (Night)
+        // Layout Palette (Night)
         red = const Color(0xFFFF0000),
         green = const Color(0xFF1DB548),
         orange = const Color(0xFFFE5301),
@@ -29,7 +29,7 @@ class Palette {
         grey2 = const Color(0xFFC1C1C1),
         white = const Color(0xFFFFFFFF),
 
-        // Нестандартные цвета палитры
+        // Non-standard palette colors
         disabledButton = const Color(0xFF585858),
         buttonActiveText = const Color(0xFFFFFFFF),
         boxShadow = const Color(0x19000000),
@@ -40,10 +40,10 @@ class Palette {
         transactionPending = const Color(0xFF888888),
         progressIndicator = const Color(0xFFFED116),
 
-        // Дополнительные цвета палитры
+        // Additional palette colors
         dialogsBarrierColor = const Color(0x80000000);
 
-  Palette.day()
+  Palette.light()
       : palettePrimaryValue = 0xFFFF0000,
         primarySwatch = const MaterialColor(0xFFFF0000, <int, Color>{
           50: Color(0xFFffe0e0),
@@ -58,7 +58,7 @@ class Palette {
           900: Color(0xFFff0000),
         }),
 
-        // Палитра макета (Day)
+        // Layout Palette (Day)
         red = const Color(0xFFFF0000),
         green = const Color(0xFF1DB548),
         orange = const Color(0xFFFE5301),
@@ -68,7 +68,7 @@ class Palette {
         grey2 = const Color(0xFF888888),
         white = const Color(0xFF141414),
 
-        // Нестандартные цвета элементов интерфейса (Day):
+        // Non-standard palette colors
         disabledButton = const Color(0xFF585858),
         buttonActiveText = const Color(0xFFFFFFFF),
         boxShadow = const Color(0x19000000),
@@ -79,14 +79,14 @@ class Palette {
         transactionPending = const Color(0xFF888888),
         progressIndicator = const Color(0x00FED116),
 
-        // Дополнительные цвета палитры
+        // Additional palette colors
         dialogsBarrierColor = const Color(0x80000000);
 
   final int palettePrimaryValue;
 
   final MaterialColor primarySwatch;
 
-  // Палитра макета;
+  // Layout Palette
   final Color red;
   final Color green;
   final Color orange;
@@ -96,7 +96,7 @@ class Palette {
   final Color grey2;
   final Color white;
 
-  // Нестандартные цвета элементов интерфейса:
+  // Non-standard palette colors
   final Color disabledButton;
   final Color buttonActiveShadow;
   final Color buttonActiveText;
@@ -107,6 +107,6 @@ class Palette {
   final Color transactionPending;
   final Color progressIndicator;
 
-  // Дополнительные цвета палитры
+  // Additional palette colors
   final Color dialogsBarrierColor;
 }

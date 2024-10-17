@@ -4,12 +4,12 @@ import 'package:flutter/foundation.dart';
 
 import '../interfaces/i_authenticate_repository.dart';
 import '../interfaces/i_local_cache.dart';
-import '../models/tokens_pair.dart';
+import '../models/jwt_tokens.dart';
 
 // -----------------------------------------------------------------------------
 // -----------------------------------------------------------------------------
 // -----------------------------------------------------------------------------
-/// контроллер, который принимает события для репозитория аутентификации
+/// the controller that receives events for the authentication repository
 class _AuthenticateController extends ChangeNotifier
     implements IAuthenticateController {
   _AuthenticateController({
@@ -18,16 +18,16 @@ class _AuthenticateController extends ChangeNotifier
         _status = _initialAuthenticateStatus;
 
   // ---------------------------------------------------------------------------
-  // зависимости
+  // dependencies
   late final ILocalCache _localCache;
 
   // ---------------------------------------------------------------------------
-  // значения по-умолчанию
+  // default values
   static const AuthenticateStatus _initialAuthenticateStatus =
       AuthenticateStatus.notAuthorized;
 
   // ---------------------------------------------------------------------------
-  // состояния
+  // states
   late AuthenticateStatus _status;
 
   // ---------------------------------------------------------------------------
@@ -35,49 +35,53 @@ class _AuthenticateController extends ChangeNotifier
   AuthenticateStatus get status => _status;
 
   // ---------------------------------------------------------------------------
-  // принимает событие о том, что токены успешно обновлены
-  // получает свежие токены
+  // accepts the event that the tokens have been successfully updated
+  // receives fresh tokens
   @override
   Future<void> onAccessTokensUpdated(
-      String accessToken, String refreshToken) async {
+    String accessToken,
+    String refreshToken,
+  ) async {
     await _localCache.setAuthTokens(
-        tokens:
-            TokensPair(accessToken: accessToken, refreshToken: refreshToken));
+      tokens: JwtTokens(
+        access: accessToken,
+        refresh: refreshToken,
+      ),
+    );
 
-    // меняем состояние
+    // changing the state
     _status = AuthenticateStatus.authorized;
 
-    // оповещаем об изменении
+    // we inform you about the change
     notifyListeners();
   }
 
   // ---------------------------------------------------------------------------
-  // принимает событие о том, что аутентификация не удалась
+  // accepts the event that authentication failed
   @override
-  Future<void> onAuthenticateFailed() async {
-    // очищаем токены
+  Future<void> onAuthenticateCanceled() async {
+    // clearing tokens
     await _localCache.deleteAuthTokens();
 
-    // меняем состояние аутентификации
+    // changing the authentication status
     _status = AuthenticateStatus.notAuthorized;
 
-    // оповещаем об изменении
+    // we inform you about the change
     notifyListeners();
   }
 
   // ---------------------------------------------------------------------------
-  // принимает событие о том, что удалоь авторизоваться
-  // и получает токены
+  // accepts the event that you can log in
+  // and receives tokens
   @override
   Future<void> onAuthenticated(String accessToken, String refreshToken) async {
     await _localCache.setAuthTokens(
-        tokens:
-            TokensPair(accessToken: accessToken, refreshToken: refreshToken));
+        tokens: JwtTokens(access: accessToken, refresh: refreshToken));
 
-    // меняем состояние
+    // changing the state
     _status = AuthenticateStatus.authorized;
 
-    // оповещаем об изменении
+    // we inform you about the change
     notifyListeners();
   }
 }
@@ -85,17 +89,17 @@ class _AuthenticateController extends ChangeNotifier
 // -----------------------------------------------------------------------------
 // -----------------------------------------------------------------------------
 // -----------------------------------------------------------------------------
-/// репозиторий аутентификации
+/// authentication repository
 class AuthenticateRepository implements IAuthenticateRepository {
   // ---------------------------------------------------------------------------
   AuthenticateRepository({
     required ILocalCache localCache,
     IAuthenticateController? controller,
   }) : _localCache = localCache {
-    // создаём контроллер репозитория
+    // creating a repository controller
     _controller = controller ?? _AuthenticateController(localCache: localCache);
 
-    // подписываемся на изменения в контроллере
+    // subscribing to changes in the controller
     _controller.addListener(_onControllerChanged);
 
     _authenticateStreamController =
@@ -103,22 +107,22 @@ class AuthenticateRepository implements IAuthenticateRepository {
   }
 
   // ---------------------------------------------------------------------------
-  // зависимости
+  // dependencies
   late final ILocalCache _localCache;
 
   // ---------------------------------------------------------------------------
-  // подписки, стримы
+  // subscriptions, streams
   late final StreamController<AuthenticateStatus> _authenticateStreamController;
 
   // ---------------------------------------------------------------------------
-  // переменные состояния
+  // state variables
   late IAuthenticateController _controller;
 
   @override
   IAuthenticateController get controller => _controller;
 
   // ---------------------------------------------------------------------------
-  // в контроллере аутентификации произошли изменения
+  // there have been changes in the authentication controller
   void _onControllerChanged() {
     if (!_authenticateStreamController.isClosed) {
       _authenticateStreamController.add(_controller.status);
@@ -126,32 +130,32 @@ class AuthenticateRepository implements IAuthenticateRepository {
   }
 
   // ---------------------------------------------------------------------------
-  // закрытие репозитория, закрытие стримов
+  // closing the repository, closing streams
   @override
   Future<void> close() async {
-    // отписываемся от изменений в контроллере
+    // unsubscribe from changes in the controller
     _controller.removeListener(_onControllerChanged);
 
     await _authenticateStreamController.close();
   }
 
   // ---------------------------------------------------------------------------
-  // подписка на изменения в репозитории
+  // subscribing to changes in the repository
   @override
   AuthenticateSubscription subscribe(Function(AuthenticateStatus) listener) {
     return _authenticateStreamController.stream.listen(listener);
   }
 
   // ---------------------------------------------------------------------------
-  // чтение кешированных токенов
+  // reading cached tokens
   @override
-  Future<TokensPair?> getCachedTokens() => _localCache.getAuthTokens();
+  Future<JwtTokens?> getCachedTokens() => _localCache.getAuthTokens();
 
   // ---------------------------------------------------------------------------
-  // выход из системы с очисткой токенов
+  // logging out with token clearing
   @override
   Future<void> logout() async {
-    await controller.onAuthenticateFailed();
+    await controller.onAuthenticateCanceled();
   }
 // ---------------------------------------------------------------------------
 }

@@ -12,10 +12,10 @@ class RequestRefreshTokens extends IApiRequest {
           url: '/tokens/refresh',
         );
 
-  // данные запроса
+  // Request data
   final String refreshToken;
 
-  // Тело запроса
+  // Request body
   @override
   Map<String, Object?>? get body => {
         'refresh_token': refreshToken,

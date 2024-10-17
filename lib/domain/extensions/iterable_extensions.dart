@@ -3,19 +3,8 @@ extension IterableModifier<E> on Iterable<E> {
       cast<E?>().firstWhere((v) => v != null && test(v), orElse: () => null);
 }
 
-extension IterableAddUnique<T> on List<T> {
-  // добавление новых уникальных записей
-  Iterable<T> addUniqueIterable(Iterable<T> items) sync* {
-    final asSet = toSet();
-    yield* this;
-    for (final newItem in items) {
-      if (!asSet.contains(newItem)) {
-        yield newItem;
-      }
-    }
-  }
-
-  // списки содержат хоть одну дублирующуюся запись
+extension IterableAny<T> on List<T> {
+  // the lists contain at least one duplicate entry
   bool containsAny(Iterable<T> items) {
     final asSet = toSet();
     for (final newItem in items) {

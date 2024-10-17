@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'auth_controller_bloc.dart';
 
@@ -12,7 +12,7 @@ part of 'auth_controller_bloc.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$AuthControllerEvents {
@@ -24,8 +24,8 @@ mixin _$AuthControllerEvents {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? onInitializeRequested,
-    TResult Function(AuthenticateStatus newStatus)? onStatusChanged,
+    TResult? Function()? onInitializeRequested,
+    TResult? Function(AuthenticateStatus newStatus)? onStatusChanged,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -44,8 +44,8 @@ mixin _$AuthControllerEvents {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_EventOnInitialiseRequested value)? onInitializeRequested,
-    TResult Function(_EventOnStatusChanged value)? onStatusChanged,
+    TResult? Function(_EventOnInitialiseRequested value)? onInitializeRequested,
+    TResult? Function(_EventOnStatusChanged value)? onStatusChanged,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -61,45 +61,50 @@ mixin _$AuthControllerEvents {
 abstract class $AuthControllerEventsCopyWith<$Res> {
   factory $AuthControllerEventsCopyWith(AuthControllerEvents value,
           $Res Function(AuthControllerEvents) then) =
-      _$AuthControllerEventsCopyWithImpl<$Res>;
+      _$AuthControllerEventsCopyWithImpl<$Res, AuthControllerEvents>;
 }
 
 /// @nodoc
-class _$AuthControllerEventsCopyWithImpl<$Res>
+class _$AuthControllerEventsCopyWithImpl<$Res,
+        $Val extends AuthControllerEvents>
     implements $AuthControllerEventsCopyWith<$Res> {
   _$AuthControllerEventsCopyWithImpl(this._value, this._then);
 
-  final AuthControllerEvents _value;
   // ignore: unused_field
-  final $Res Function(AuthControllerEvents) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  /// Create a copy of AuthControllerEvents
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
-abstract class _$$_EventOnInitialiseRequestedCopyWith<$Res> {
-  factory _$$_EventOnInitialiseRequestedCopyWith(
-          _$_EventOnInitialiseRequested value,
-          $Res Function(_$_EventOnInitialiseRequested) then) =
-      __$$_EventOnInitialiseRequestedCopyWithImpl<$Res>;
+abstract class _$$EventOnInitialiseRequestedImplCopyWith<$Res> {
+  factory _$$EventOnInitialiseRequestedImplCopyWith(
+          _$EventOnInitialiseRequestedImpl value,
+          $Res Function(_$EventOnInitialiseRequestedImpl) then) =
+      __$$EventOnInitialiseRequestedImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$_EventOnInitialiseRequestedCopyWithImpl<$Res>
-    extends _$AuthControllerEventsCopyWithImpl<$Res>
-    implements _$$_EventOnInitialiseRequestedCopyWith<$Res> {
-  __$$_EventOnInitialiseRequestedCopyWithImpl(
-      _$_EventOnInitialiseRequested _value,
-      $Res Function(_$_EventOnInitialiseRequested) _then)
-      : super(_value, (v) => _then(v as _$_EventOnInitialiseRequested));
+class __$$EventOnInitialiseRequestedImplCopyWithImpl<$Res>
+    extends _$AuthControllerEventsCopyWithImpl<$Res,
+        _$EventOnInitialiseRequestedImpl>
+    implements _$$EventOnInitialiseRequestedImplCopyWith<$Res> {
+  __$$EventOnInitialiseRequestedImplCopyWithImpl(
+      _$EventOnInitialiseRequestedImpl _value,
+      $Res Function(_$EventOnInitialiseRequestedImpl) _then)
+      : super(_value, _then);
 
-  @override
-  _$_EventOnInitialiseRequested get _value =>
-      super._value as _$_EventOnInitialiseRequested;
+  /// Create a copy of AuthControllerEvents
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
 
-class _$_EventOnInitialiseRequested implements _EventOnInitialiseRequested {
-  const _$_EventOnInitialiseRequested();
+class _$EventOnInitialiseRequestedImpl implements _EventOnInitialiseRequested {
+  const _$EventOnInitialiseRequestedImpl();
 
   @override
   String toString() {
@@ -107,10 +112,10 @@ class _$_EventOnInitialiseRequested implements _EventOnInitialiseRequested {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_EventOnInitialiseRequested);
+            other is _$EventOnInitialiseRequestedImpl);
   }
 
   @override
@@ -128,8 +133,8 @@ class _$_EventOnInitialiseRequested implements _EventOnInitialiseRequested {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? onInitializeRequested,
-    TResult Function(AuthenticateStatus newStatus)? onStatusChanged,
+    TResult? Function()? onInitializeRequested,
+    TResult? Function(AuthenticateStatus newStatus)? onStatusChanged,
   }) {
     return onInitializeRequested?.call();
   }
@@ -160,8 +165,8 @@ class _$_EventOnInitialiseRequested implements _EventOnInitialiseRequested {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_EventOnInitialiseRequested value)? onInitializeRequested,
-    TResult Function(_EventOnStatusChanged value)? onStatusChanged,
+    TResult? Function(_EventOnInitialiseRequested value)? onInitializeRequested,
+    TResult? Function(_EventOnStatusChanged value)? onStatusChanged,
   }) {
     return onInitializeRequested?.call(this);
   }
@@ -181,34 +186,36 @@ class _$_EventOnInitialiseRequested implements _EventOnInitialiseRequested {
 }
 
 abstract class _EventOnInitialiseRequested implements AuthControllerEvents {
-  const factory _EventOnInitialiseRequested() = _$_EventOnInitialiseRequested;
+  const factory _EventOnInitialiseRequested() =
+      _$EventOnInitialiseRequestedImpl;
 }
 
 /// @nodoc
-abstract class _$$_EventOnStatusChangedCopyWith<$Res> {
-  factory _$$_EventOnStatusChangedCopyWith(_$_EventOnStatusChanged value,
-          $Res Function(_$_EventOnStatusChanged) then) =
-      __$$_EventOnStatusChangedCopyWithImpl<$Res>;
+abstract class _$$EventOnStatusChangedImplCopyWith<$Res> {
+  factory _$$EventOnStatusChangedImplCopyWith(_$EventOnStatusChangedImpl value,
+          $Res Function(_$EventOnStatusChangedImpl) then) =
+      __$$EventOnStatusChangedImplCopyWithImpl<$Res>;
+  @useResult
   $Res call({AuthenticateStatus newStatus});
 }
 
 /// @nodoc
-class __$$_EventOnStatusChangedCopyWithImpl<$Res>
-    extends _$AuthControllerEventsCopyWithImpl<$Res>
-    implements _$$_EventOnStatusChangedCopyWith<$Res> {
-  __$$_EventOnStatusChangedCopyWithImpl(_$_EventOnStatusChanged _value,
-      $Res Function(_$_EventOnStatusChanged) _then)
-      : super(_value, (v) => _then(v as _$_EventOnStatusChanged));
+class __$$EventOnStatusChangedImplCopyWithImpl<$Res>
+    extends _$AuthControllerEventsCopyWithImpl<$Res, _$EventOnStatusChangedImpl>
+    implements _$$EventOnStatusChangedImplCopyWith<$Res> {
+  __$$EventOnStatusChangedImplCopyWithImpl(_$EventOnStatusChangedImpl _value,
+      $Res Function(_$EventOnStatusChangedImpl) _then)
+      : super(_value, _then);
 
-  @override
-  _$_EventOnStatusChanged get _value => super._value as _$_EventOnStatusChanged;
-
+  /// Create a copy of AuthControllerEvents
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? newStatus = freezed,
+    Object? newStatus = null,
   }) {
-    return _then(_$_EventOnStatusChanged(
-      newStatus: newStatus == freezed
+    return _then(_$EventOnStatusChangedImpl(
+      newStatus: null == newStatus
           ? _value.newStatus
           : newStatus // ignore: cast_nullable_to_non_nullable
               as AuthenticateStatus,
@@ -218,8 +225,8 @@ class __$$_EventOnStatusChangedCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_EventOnStatusChanged implements _EventOnStatusChanged {
-  const _$_EventOnStatusChanged({required this.newStatus});
+class _$EventOnStatusChangedImpl implements _EventOnStatusChanged {
+  const _$EventOnStatusChangedImpl({required this.newStatus});
 
   @override
   final AuthenticateStatus newStatus;
@@ -230,22 +237,26 @@ class _$_EventOnStatusChanged implements _EventOnStatusChanged {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_EventOnStatusChanged &&
-            const DeepCollectionEquality().equals(other.newStatus, newStatus));
+            other is _$EventOnStatusChangedImpl &&
+            (identical(other.newStatus, newStatus) ||
+                other.newStatus == newStatus));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(newStatus));
+  int get hashCode => Object.hash(runtimeType, newStatus);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of AuthControllerEvents
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  _$$_EventOnStatusChangedCopyWith<_$_EventOnStatusChanged> get copyWith =>
-      __$$_EventOnStatusChangedCopyWithImpl<_$_EventOnStatusChanged>(
-          this, _$identity);
+  @pragma('vm:prefer-inline')
+  _$$EventOnStatusChangedImplCopyWith<_$EventOnStatusChangedImpl>
+      get copyWith =>
+          __$$EventOnStatusChangedImplCopyWithImpl<_$EventOnStatusChangedImpl>(
+              this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -259,8 +270,8 @@ class _$_EventOnStatusChanged implements _EventOnStatusChanged {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? onInitializeRequested,
-    TResult Function(AuthenticateStatus newStatus)? onStatusChanged,
+    TResult? Function()? onInitializeRequested,
+    TResult? Function(AuthenticateStatus newStatus)? onStatusChanged,
   }) {
     return onStatusChanged?.call(newStatus);
   }
@@ -291,8 +302,8 @@ class _$_EventOnStatusChanged implements _EventOnStatusChanged {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_EventOnInitialiseRequested value)? onInitializeRequested,
-    TResult Function(_EventOnStatusChanged value)? onStatusChanged,
+    TResult? Function(_EventOnInitialiseRequested value)? onInitializeRequested,
+    TResult? Function(_EventOnStatusChanged value)? onStatusChanged,
   }) {
     return onStatusChanged?.call(this);
   }
@@ -313,12 +324,16 @@ class _$_EventOnStatusChanged implements _EventOnStatusChanged {
 
 abstract class _EventOnStatusChanged implements AuthControllerEvents {
   const factory _EventOnStatusChanged(
-      {required final AuthenticateStatus newStatus}) = _$_EventOnStatusChanged;
+          {required final AuthenticateStatus newStatus}) =
+      _$EventOnStatusChangedImpl;
 
   AuthenticateStatus get newStatus;
-  @JsonKey(ignore: true)
-  _$$_EventOnStatusChangedCopyWith<_$_EventOnStatusChanged> get copyWith =>
-      throw _privateConstructorUsedError;
+
+  /// Create a copy of AuthControllerEvents
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$EventOnStatusChangedImplCopyWith<_$EventOnStatusChangedImpl>
+      get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -331,7 +346,7 @@ mixin _$AuthControllerStates {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(AuthenticateStatus status)? newStatus,
+    TResult? Function(AuthenticateStatus status)? newStatus,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -347,7 +362,7 @@ mixin _$AuthControllerStates {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_StateNewStatus value)? newStatus,
+    TResult? Function(_StateNewStatus value)? newStatus,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -357,7 +372,9 @@ mixin _$AuthControllerStates {
   }) =>
       throw _privateConstructorUsedError;
 
-  @JsonKey(ignore: true)
+  /// Create a copy of AuthControllerStates
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $AuthControllerStatesCopyWith<AuthControllerStates> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -366,59 +383,66 @@ mixin _$AuthControllerStates {
 abstract class $AuthControllerStatesCopyWith<$Res> {
   factory $AuthControllerStatesCopyWith(AuthControllerStates value,
           $Res Function(AuthControllerStates) then) =
-      _$AuthControllerStatesCopyWithImpl<$Res>;
+      _$AuthControllerStatesCopyWithImpl<$Res, AuthControllerStates>;
+  @useResult
   $Res call({AuthenticateStatus status});
 }
 
 /// @nodoc
-class _$AuthControllerStatesCopyWithImpl<$Res>
+class _$AuthControllerStatesCopyWithImpl<$Res,
+        $Val extends AuthControllerStates>
     implements $AuthControllerStatesCopyWith<$Res> {
   _$AuthControllerStatesCopyWithImpl(this._value, this._then);
 
-  final AuthControllerStates _value;
   // ignore: unused_field
-  final $Res Function(AuthControllerStates) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  /// Create a copy of AuthControllerStates
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? status = freezed,
+    Object? status = null,
   }) {
     return _then(_value.copyWith(
-      status: status == freezed
+      status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as AuthenticateStatus,
-    ));
+    ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$$_StateNewStatusCopyWith<$Res>
+abstract class _$$StateNewStatusImplCopyWith<$Res>
     implements $AuthControllerStatesCopyWith<$Res> {
-  factory _$$_StateNewStatusCopyWith(
-          _$_StateNewStatus value, $Res Function(_$_StateNewStatus) then) =
-      __$$_StateNewStatusCopyWithImpl<$Res>;
+  factory _$$StateNewStatusImplCopyWith(_$StateNewStatusImpl value,
+          $Res Function(_$StateNewStatusImpl) then) =
+      __$$StateNewStatusImplCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({AuthenticateStatus status});
 }
 
 /// @nodoc
-class __$$_StateNewStatusCopyWithImpl<$Res>
-    extends _$AuthControllerStatesCopyWithImpl<$Res>
-    implements _$$_StateNewStatusCopyWith<$Res> {
-  __$$_StateNewStatusCopyWithImpl(
-      _$_StateNewStatus _value, $Res Function(_$_StateNewStatus) _then)
-      : super(_value, (v) => _then(v as _$_StateNewStatus));
+class __$$StateNewStatusImplCopyWithImpl<$Res>
+    extends _$AuthControllerStatesCopyWithImpl<$Res, _$StateNewStatusImpl>
+    implements _$$StateNewStatusImplCopyWith<$Res> {
+  __$$StateNewStatusImplCopyWithImpl(
+      _$StateNewStatusImpl _value, $Res Function(_$StateNewStatusImpl) _then)
+      : super(_value, _then);
 
-  @override
-  _$_StateNewStatus get _value => super._value as _$_StateNewStatus;
-
+  /// Create a copy of AuthControllerStates
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? status = freezed,
+    Object? status = null,
   }) {
-    return _then(_$_StateNewStatus(
-      status: status == freezed
+    return _then(_$StateNewStatusImpl(
+      status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as AuthenticateStatus,
@@ -428,8 +452,8 @@ class __$$_StateNewStatusCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_StateNewStatus implements _StateNewStatus {
-  const _$_StateNewStatus({required this.status});
+class _$StateNewStatusImpl implements _StateNewStatus {
+  const _$StateNewStatusImpl({required this.status});
 
   @override
   final AuthenticateStatus status;
@@ -440,21 +464,24 @@ class _$_StateNewStatus implements _StateNewStatus {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_StateNewStatus &&
-            const DeepCollectionEquality().equals(other.status, status));
+            other is _$StateNewStatusImpl &&
+            (identical(other.status, status) || other.status == status));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(status));
+  int get hashCode => Object.hash(runtimeType, status);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of AuthControllerStates
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  _$$_StateNewStatusCopyWith<_$_StateNewStatus> get copyWith =>
-      __$$_StateNewStatusCopyWithImpl<_$_StateNewStatus>(this, _$identity);
+  @pragma('vm:prefer-inline')
+  _$$StateNewStatusImplCopyWith<_$StateNewStatusImpl> get copyWith =>
+      __$$StateNewStatusImplCopyWithImpl<_$StateNewStatusImpl>(
+          this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -467,7 +494,7 @@ class _$_StateNewStatus implements _StateNewStatus {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(AuthenticateStatus status)? newStatus,
+    TResult? Function(AuthenticateStatus status)? newStatus,
   }) {
     return newStatus?.call(status);
   }
@@ -495,7 +522,7 @@ class _$_StateNewStatus implements _StateNewStatus {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_StateNewStatus value)? newStatus,
+    TResult? Function(_StateNewStatus value)? newStatus,
   }) {
     return newStatus?.call(this);
   }
@@ -515,12 +542,15 @@ class _$_StateNewStatus implements _StateNewStatus {
 
 abstract class _StateNewStatus implements AuthControllerStates {
   const factory _StateNewStatus({required final AuthenticateStatus status}) =
-      _$_StateNewStatus;
+      _$StateNewStatusImpl;
 
   @override
   AuthenticateStatus get status;
+
+  /// Create a copy of AuthControllerStates
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
-  _$$_StateNewStatusCopyWith<_$_StateNewStatus> get copyWith =>
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$StateNewStatusImplCopyWith<_$StateNewStatusImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

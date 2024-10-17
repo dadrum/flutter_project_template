@@ -3,10 +3,10 @@ description: Template mobile app
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-version: 1.0.0+1
+version: 0.0.2+2
 
 environment:
-  sdk: '>=3.0.0 <4.0.0'
+  sdk: '>=3.2.0 <4.0.0'
 
 dependencies:
   flutter:
@@ -15,44 +15,42 @@ dependencies:
     sdk: flutter
   intl: any
 
-  # стейт менеджмент
-  flutter_bloc: 8.1.3
-  bloc_concurrency: 0.2.2
+  # state management
+  flutter_bloc: 8.1.6
+  bloc_concurrency: 0.2.5
 
-  # сеть
-  dio: 5.3.3
-  json_annotation: 4.8.1
+  # network
+  dio: 5.7.0
 
-  # хранение локальных данных
-  shared_preferences: 2.2.2
-  flutter_secure_storage: 9.0.0
+  # storing local data
+  shared_preferences: 2.3.2
+  flutter_secure_storage: 9.2.2
 
-  # форматированные поля ввода
-  mask_text_input_formatter: 2.5.0
+  # formatted input fields
+  mask_text_input_formatter: 2.9.0
 
-  # автоматическое добавление зависимостей
-  dep_gen: 1.1.2
+  # native splash
+  flutter_native_splash: 2.4.1
 
-  # нативный сплеш
-  flutter_native_splash: 2.3.5
+  cupertino_icons: 1.0.8
+  flutter_svg: 2.0.10+1
 
-  cupertino_icons: 1.0.6
-  flutter_svg: 2.0.9
-  #  carousel_slider: 4.2.1
-  #  shimmer: 3.0.0
-
-  # кодогенерация
-  freezed_annotation: 2.4.1
+  # code generation
+  freezed_annotation: 2.4.4
+  json_annotation: 4.9.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_launcher_icons: 0.13.1
+  flutter_launcher_icons: 0.14.1
 
-  # кодогенерация
-  build_runner: 2.4.6
-  json_serializable: 6.7.1
-  freezed: 2.4.5
+  # automatic addition of dependencies
+  dep_gen: 1.1.6
+
+  # code generation
+  build_runner: 2.4.13
+  json_serializable: 6.8.0
+  freezed: 2.5.7
 
 #dependency_overrides:
 
