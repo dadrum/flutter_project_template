@@ -3,7 +3,9 @@ import '../../data/local_cache/local_cache.dart';
 import '../interfaces/i_api_facade.dart';
 import '../interfaces/i_authenticate_repository.dart';
 import '../interfaces/i_local_cache.dart';
+import '../interfaces/i_template_repository.dart';
 import '../repositories/authenticate_repository.dart';
+import '../repositories/template_repository.dart';
 import 'builders.dep_gen.dart';
 
 class Environment extends DepGenEnvironment {
@@ -24,6 +26,11 @@ class Environment extends DepGenEnvironment {
     final IApiFacade api = ApiFacade()
       ..setAuthenticateController(authenticateRepository.controller);
     registry<IApiFacade>(api);
+
+    // -------------------------------------------------------------------------
+    // #DOMAIN: Template Repository
+    final ITemplateRepository templateRepository = TemplateRepository(api: api);
+    registry<ITemplateRepository>(templateRepository);
 
     return this;
   }
