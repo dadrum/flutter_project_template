@@ -65,7 +65,6 @@ flutter:
 
   assets:
     - assets/fonts/
-    - assets/languages/
 
   fonts:
     - family: Inter
