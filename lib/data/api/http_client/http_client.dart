@@ -9,6 +9,7 @@ import '../../../domain/interfaces/i_authenticate_repository.dart';
 import 'i_api_request.dart';
 import 'request_canceled.dart';
 import 'request_exception.dart';
+import 'request_secure_exception.dart';
 import 'request_timeout_exception.dart';
 
 enum AvailableApiMethods { get, post, put, delete, patch }
@@ -413,6 +414,7 @@ class DioClient {
       return response;
     } on DioException catch (dioError, mainStackTrace) {
       final stackTrace = StackTrace.fromString(
+        '${dioError.error}\n'
         'Main stackTrace:\n$mainStackTrace\n'
         'Dio stackTrace:\n${dioError.stackTrace}',
       );
@@ -437,6 +439,23 @@ class DioClient {
             ),
             stackTrace,
           );
+        case DioExceptionType.unknown:
+
+          /// A secure networking exception caused by a failure in the
+          /// TLS/SSL protocol.
+          if (dioError.error is TlsException) {
+            Error.throwWithStackTrace(
+              RequestSecureException(
+                httpStatusCode: dioError.response?.statusCode ?? 0,
+                requestPath: dioError.requestOptions.path,
+                requestData: dioError.requestOptions.data,
+                requestMethod: dioError.requestOptions.method,
+                responseData: dioError.response?.data,
+                exceptionType: dioError.type,
+              ),
+              stackTrace,
+            );
+          }
         default:
         // продолжаем обработку ошибки
       }
