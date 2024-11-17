@@ -447,7 +447,7 @@ DA:169,0
 LF:59
 LH:0
 end_of_record
-SF:lib/domain/models/jwt_tokens.dart
+SF:lib/domain/entities/jwt_tokens.dart
 DA:5,4
 DA:13,2
 DA:17,2
@@ -1294,7 +1294,7 @@ SF:lib/presentation/screens/developer_widgets/app_logger/bloc/events.dart
 LF:0
 LH:0
 end_of_record
-SF:lib/domain/interfaces/i_timers_repository.dart
+SF:lib/domain/repositories/i_timers_repository.dart
 DA:7,1
 LF:1
 LH:1

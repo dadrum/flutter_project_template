@@ -1,4 +1,4 @@
-import 'package:app_template/domain/extensions/iterable_extensions.dart';
+import 'package:app_template/core/extensions/iterable_extensions.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

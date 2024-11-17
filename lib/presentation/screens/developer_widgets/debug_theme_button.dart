@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../domain/models/theme_type.dart';
+import '../../../domain/entities/theme_type.dart';
 import '../../theme/dynamic_theme.dart';
 import 'common_developer_button.dart';
 

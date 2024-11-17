@@ -2,18 +2,15 @@ import 'dart:async';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 
-import 'domain/environment/builders.dep_gen.dart';
-import 'domain/environment/environment.dart';
-import 'domain/error_logger/error_logger.dart';
-import 'domain/interfaces/i_error_logger.dart';
+import 'core/application.dart';
+import 'core/environment/builders.dep_gen.dart';
+import 'core/environment/environment.dart';
+import 'core/errors/i_error_logger.dart';
+import 'data/error_logger/error_logger.dart';
 import 'l10n/locale_provider.dart';
-import 'presentation/navigation/top_route.dart';
-import 'presentation/screens/developer_widgets/developer_widgets.dart';
 import 'presentation/theme/dynamic_theme.dart';
-import 'presentation/values/strings.dart';
 
 Future<void> main() async {
   final widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
@@ -39,37 +36,17 @@ Future<void> main() async {
 
   runApp(
     DepProvider(
-      environment: (await environment.prepare()).lock(),
-      child: const DynamicTheme(
-        child: LocaleProvider(
-          child: Application(),
-        ),
-      ),
+      environment: await environment.prepare(),
+      child: Builder(builder: (context) {
+        environment.registryUseCases(context.depGen());
+        return const DynamicTheme(
+          child: LocaleProvider(
+            child: Application(),
+          ),
+        );
+      }),
     ),
   );
-}
-
-// ---------------------------------------------------------------------------
-// ---------------------------------------------------------------------------
-// ---------------------------------------------------------------------------
-class Application extends StatelessWidget {
-  const Application({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return DeveloperWidgets(
-      child: MaterialApp(
-        title: Strings.appName,
-        initialRoute: TopRoute.routeSplash,
-        routes: TopRoute.routes(),
-        theme: DynamicTheme.themeOf(context),
-        localizationsDelegates: AppLocalizations.localizationsDelegates,
-        supportedLocales: AppLocalizations.supportedLocales,
-        locale: LocaleProvider.of(context)!.locale,
-        debugShowCheckedModeBanner: false,
-      ),
-    );
-  }
 }
 
 // -----------------------------------------------------------------------------

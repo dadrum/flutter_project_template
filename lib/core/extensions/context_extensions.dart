@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../presentation/theme/dynamic_theme.dart';
-import '../../presentation/values/palette.dart';
+import '../../presentation/theme/palette.dart';
 
 /// extension for reduced access to text styles and colors
 extension ContextExtension on BuildContext {

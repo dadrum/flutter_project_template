@@ -2,9 +2,9 @@ import 'dart:async';
 
 import 'package:flutter/foundation.dart';
 
-import '../interfaces/i_authenticate_repository.dart';
+import '../../domain/entities/jwt_tokens.dart';
+import '../../domain/repositories/i_authenticate_repository.dart';
 import '../interfaces/i_local_cache.dart';
-import '../models/jwt_tokens.dart';
 
 // -----------------------------------------------------------------------------
 // -----------------------------------------------------------------------------

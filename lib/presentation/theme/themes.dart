@@ -3,9 +3,9 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import '../../domain/models/theme_type.dart';
-import '../values/palette.dart';
-import '../values/values.dart';
+import '../../core/constants/values.dart';
+import '../../domain/entities/theme_type.dart';
+import 'palette.dart';
 
 // https://docs.google.com/spreadsheets/u/0/d/1vraGWxcY_7xS5vpxlzuF5G0M6Vyj8gLhEVf7K1ynx5o/htmlview#gid=0
 

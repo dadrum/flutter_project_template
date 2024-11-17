@@ -7,9 +7,9 @@ import 'dart:async' as _i5;
 import 'dart:ui' as _i4;
 
 import 'package:app_template/data/local_cache/local_cache.dart' as _i3;
-import 'package:app_template/domain/models/in_app_timer.dart' as _i7;
-import 'package:app_template/domain/models/jwt_tokens.dart' as _i6;
-import 'package:app_template/domain/models/theme_type.dart' as _i8;
+import 'package:app_template/domain/entities/in_app_timer.dart' as _i7;
+import 'package:app_template/domain/entities/jwt_tokens.dart' as _i6;
+import 'package:app_template/domain/entities/theme_type.dart' as _i8;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart' as _i2;
 import 'package:mockito/mockito.dart' as _i1;
 

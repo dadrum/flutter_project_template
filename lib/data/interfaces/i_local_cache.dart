@@ -1,8 +1,8 @@
 import 'package:flutter/foundation.dart';
 
-import '../models/in_app_timer.dart';
-import '../models/jwt_tokens.dart';
-import '../models/theme_type.dart';
+import '../../domain/entities/in_app_timer.dart';
+import '../../domain/entities/jwt_tokens.dart';
+import '../../domain/entities/theme_type.dart';
 
 abstract class ILocalCache {
   // Methods

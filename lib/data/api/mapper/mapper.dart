@@ -1,4 +1,4 @@
-import '../../../domain/models/jwt_tokens.dart';
+import '../../../domain/entities/jwt_tokens.dart';
 import '../model/responses/tokens_pair_dto.dart';
 
 // MAP RESPONSES

@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/foundation.dart';
 
-import '../models/jwt_tokens.dart';
+import '../entities/jwt_tokens.dart';
 
 // допустимые состояния аутентификации пользователя
 enum AuthenticateStatus {

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../../domain/environment/builders.dep_gen.dart';
+import '../../../../core/environment/builders.dep_gen.dart';
 import '../common_developer_button.dart';
 import 'bloc/app_logger_bloc.dart';
 

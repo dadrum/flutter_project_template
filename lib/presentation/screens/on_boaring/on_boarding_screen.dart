@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../core/navigation/top_route.dart';
 import '../../../l10n/locale_provider.dart';
-import '../../navigation/top_route.dart';
 
 class OnBoardingScreen extends StatelessWidget {
   const OnBoardingScreen({Key? key}) : super(key: key);

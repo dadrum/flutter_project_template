@@ -5,32 +5,48 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../../../../data/api/http_client/request_exception.dart';
-import '../../../../domain/interfaces/i_api_facade.dart';
-import '../../../../domain/interfaces/i_authenticate_repository.dart';
-import '../../../../domain/interfaces/i_local_cache.dart';
-import '../../../../domain/models/jwt_tokens.dart';
+import '../../../../domain/entities/jwt_tokens.dart';
+import '../../../../domain/use_cases/authenticate/delete_auth_tokens_use_case.dart';
+import '../../../../domain/use_cases/authenticate/get_cached_tokens_use_case.dart';
+import '../../../../domain/use_cases/authenticate/refresh_tokens_use_case.dart';
+import '../../../../domain/use_cases/authenticate/set_tokens_use_case.dart';
+import '../../../../domain/use_cases/local_cache/is_first_app_start_use_case.dart';
 
 part 'events.dart';
-
 part 'splash_bloc.freezed.dart';
-
 part 'states.dart';
 
 @DepGen()
 class SplashBloc extends Bloc<SplashEvents, SplashStates> {
   // ---------------------------------------------------------------------------
   SplashBloc({
-    @DepArg() required this.authenticateRepository,
-    @DepArg() required this.localCache,
-    @DepArg() required this.api,
-  }) : super(const SplashStates.notInitialized()) {
+    @DepArg() required GetCachedTokensUseCase getCachedTokensUseCase,
+    @DepArg() required IsFirstAppStartUseCase isFirstAppStartUseCase,
+    @DepArg() required RefreshTokensUseCase refreshTokensUseCase,
+    @DepArg() required DeleteAuthTokensUseCase deleteAuthTokensUseCase,
+    @DepArg() required SetTokensUseCase setTokensUseCase,
+  })  : _getCachedTokensUseCase = getCachedTokensUseCase,
+        _isFirstAppStartUseCase = isFirstAppStartUseCase,
+        _refreshTokensUseCase = refreshTokensUseCase,
+        _deleteAuthTokensUseCase = deleteAuthTokensUseCase,
+        _setTokensUseCase = setTokensUseCase,
+        super(const SplashStates.notInitialized()) {
     on<_EventInitialize>(onEventInitialize);
     add(const SplashEvents.initialize());
   }
+
   // ---------------------------------------------------------------------------
-  final IAuthenticateRepository authenticateRepository;
-  final IApiFacade api;
-  final ILocalCache localCache;
+  /// use cases
+  final IsFirstAppStartUseCase _isFirstAppStartUseCase;
+
+  final GetCachedTokensUseCase _getCachedTokensUseCase;
+  final SetTokensUseCase _setTokensUseCase;
+  final DeleteAuthTokensUseCase _deleteAuthTokensUseCase;
+  final RefreshTokensUseCase _refreshTokensUseCase;
+
+  // final IAuthenticateRepository authenticateRepository;
+  // final IApiFacade api;
+  // final ILocalCache localCache;
 
   // ---------------------------------------------------------------------------
   Future<void> onEventInitialize(
@@ -56,7 +72,7 @@ class SplashBloc extends Bloc<SplashEvents, SplashStates> {
   // determinate - is first app start ?
   Future<bool> checkIsFirstAppStart(Emitter<SplashStates> emitter) async {
     try {
-      final isFirstStart = await localCache.isFirstAppStart();
+      final isFirstStart = await _isFirstAppStartUseCase();
       return isFirstStart;
     } on Object catch (e, s) {
       Error.throwWithStackTrace(
@@ -68,7 +84,7 @@ class SplashBloc extends Bloc<SplashEvents, SplashStates> {
   // get saved tokens
   Future<JwtTokens?> getCachedTokens(Emitter<SplashStates> emitter) async {
     try {
-      return await localCache.getAuthTokens();
+      return await _getCachedTokensUseCase();
     } on Object catch (e, s) {
       Error.throwWithStackTrace(
           UnimplementedError('Get local tokens in splash. $e'), s);
@@ -84,16 +100,13 @@ class SplashBloc extends Bloc<SplashEvents, SplashStates> {
   ) async {
     try {
       final JwtTokens newTokens =
-          await api.refreshTokens(refreshToken: tokensPair.refresh);
-
-      // cache new tokens
-      await authenticateRepository.controller.onAuthenticated(
-        newTokens.access,
-        newTokens.refresh,
-      );
+          await _refreshTokensUseCase(refreshToken: tokensPair.refresh);
 
       // update http-client
-      await api.setTokens(newTokens.access, newTokens.refresh);
+      await _setTokensUseCase(
+        accessToken: newTokens.access,
+        refreshToken: newTokens.refresh,
+      );
 
       // set state with initialization complete
       if (!emitter.isDone) {
@@ -105,7 +118,7 @@ class SplashBloc extends Bloc<SplashEvents, SplashStates> {
         case HttpStatus.unauthorized:
         case HttpStatus.forbidden:
           // on check tokens fail
-          await localCache.deleteAuthTokens();
+          await _deleteAuthTokensUseCase();
           if (!emitter.isDone) {
             emitter(SplashStates.initializationCompleted(
                 isFirstStart: isFirstStart));

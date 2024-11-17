@@ -1,7 +1,7 @@
 import 'dart:async';
 
+import '../../domain/repositories/i_template_repository.dart';
 import '../interfaces/i_api_facade.dart';
-import '../interfaces/i_template_repository.dart';
 
 class TemplateRepository implements ITemplateRepository {
   TemplateRepository({

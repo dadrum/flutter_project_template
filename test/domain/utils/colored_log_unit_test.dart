@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:app_template/domain/utils/colored_log.dart';
+import 'package:app_template/core/utils/colored_log.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

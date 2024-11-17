@@ -1,9 +1,9 @@
 import 'dart:async';
 
 import 'package:app_template/data/local_cache/local_cache.dart';
-import 'package:app_template/domain/interfaces/i_timers_repository.dart';
-import 'package:app_template/domain/models/in_app_timer.dart';
-import 'package:app_template/domain/repositories/timers_repository.dart';
+import 'package:app_template/data/repositories/timers_repository.dart';
+import 'package:app_template/domain/entities/in_app_timer.dart';
+import 'package:app_template/domain/repositories/i_timers_repository.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';

@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import '../models/in_app_timer.dart';
+import '../entities/in_app_timer.dart';
 
 // -----------------------------------------------------------------------------
 class TimerEvent {

@@ -1,8 +1,8 @@
 import 'package:flutter/widgets.dart';
 
-import '../screens/on_boaring/on_boarding_screen.dart';
-import '../screens/splash/splash_screen.dart';
-import 'auth_controller/auth_controller_screen.dart';
+import '../../presentation/auth_controller/auth_controller_screen.dart';
+import '../../presentation/screens/on_boaring/on_boarding_screen.dart';
+import '../../presentation/screens/splash/splash_screen.dart';
 
 class TopRoute {
   static const String routeSplash = '/';

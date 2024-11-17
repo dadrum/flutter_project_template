@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../domain/extensions/context_extensions.dart';
+import '../../../core/extensions/context_extensions.dart';
 import '../../../l10n/locale_provider.dart';
 
 class AuthScreen extends StatelessWidget {

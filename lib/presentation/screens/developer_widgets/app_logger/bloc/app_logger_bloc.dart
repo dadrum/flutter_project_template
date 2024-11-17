@@ -4,7 +4,7 @@ import 'package:bloc/bloc.dart';
 import 'package:dep_gen/dep_gen.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import '../../../../../domain/interfaces/i_error_logger.dart';
+import '../../../../../core/errors/i_error_logger.dart';
 
 part 'events.dart';
 

@@ -1,5 +1,5 @@
-import '../../data/api/http_client/request_exception.dart';
-import '../interfaces/i_error_logger.dart';
+import '../../core/errors/i_error_logger.dart';
+import '../api/http_client/request_exception.dart';
 
 class CustomErrorLogger implements IErrorLogger {
   final List<String> _stack = [];

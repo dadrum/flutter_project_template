@@ -2,9 +2,9 @@ import 'dart:convert';
 
 import 'package:dio/dio.dart';
 
-import '../../domain/interfaces/i_api_facade.dart';
-import '../../domain/interfaces/i_authenticate_repository.dart';
-import '../../domain/models/jwt_tokens.dart';
+import '../../domain/entities/jwt_tokens.dart';
+import '../../domain/repositories/i_authenticate_repository.dart';
+import '../interfaces/i_api_facade.dart';
 import 'http_client/http_client.dart';
 import 'mapper/mapper.dart';
 import 'model/requests/request_auth.dart';

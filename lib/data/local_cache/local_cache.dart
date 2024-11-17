@@ -6,11 +6,11 @@ import 'package:flutter/services.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../domain/extensions/iterable_extensions.dart';
-import '../../domain/interfaces/i_local_cache.dart';
-import '../../domain/models/in_app_timer.dart';
-import '../../domain/models/jwt_tokens.dart';
-import '../../domain/models/theme_type.dart';
+import '../../core/extensions/iterable_extensions.dart';
+import '../../domain/entities/in_app_timer.dart';
+import '../../domain/entities/jwt_tokens.dart';
+import '../../domain/entities/theme_type.dart';
+import '../interfaces/i_local_cache.dart';
 
 class LocalCache extends ChangeNotifier implements ILocalCache {
   final secureStorage = const FlutterSecureStorage();

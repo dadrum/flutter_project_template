@@ -1,7 +1,7 @@
 import 'package:app_template/data/local_cache/local_cache.dart';
-import 'package:app_template/domain/interfaces/i_authenticate_repository.dart';
-import 'package:app_template/domain/models/jwt_tokens.dart';
-import 'package:app_template/domain/repositories/authenticate_repository.dart';
+import 'package:app_template/data/repositories/authenticate_repository.dart';
+import 'package:app_template/domain/entities/jwt_tokens.dart';
+import 'package:app_template/domain/repositories/i_authenticate_repository.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';

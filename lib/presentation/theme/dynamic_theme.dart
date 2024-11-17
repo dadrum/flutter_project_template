@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../domain/models/theme_type.dart';
-import '../values/palette.dart';
+import '../../domain/entities/theme_type.dart';
+import 'palette.dart';
 import 'themes.dart';
 
 // ---------------------------------------------------------------------------

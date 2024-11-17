@@ -1,7 +1,7 @@
 import '../../../data/api/mapper/mapper.dart';
 
-import '../models/jwt_tokens.dart';
-import 'i_authenticate_repository.dart';
+import '../../domain/entities/jwt_tokens.dart';
+import '../../domain/repositories/i_authenticate_repository.dart';
 
 abstract class IApiFacade {
   ApiDataMapper? mapper;

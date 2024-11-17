@@ -1,4 +1,4 @@
-import 'package:app_template/domain/utils/debouncer.dart';
+import 'package:app_template/core/utils/debouncer.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

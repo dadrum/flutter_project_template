@@ -10,13 +10,18 @@ import 'package:flutter/widgets.dart';
 // DepGen code generator
 // **************************************************************************
 
-import 'package:app_template/domain/interfaces/i_api_facade.dart';
-import 'package:app_template/domain/interfaces/i_local_cache.dart';
-import 'package:app_template/domain/interfaces/i_error_logger.dart';
-import 'package:app_template/domain/interfaces/i_authenticate_repository.dart';
-import 'package:app_template/presentation/navigation/auth_controller/bloc/auth_controller_bloc.dart';
+import 'package:app_template/core/errors/i_error_logger.dart';
+import 'package:app_template/data/interfaces/i_api_facade.dart';
+import 'package:app_template/data/interfaces/i_local_cache.dart';
+import 'package:app_template/domain/repositories/i_authenticate_repository.dart';
+import 'package:app_template/domain/use_cases/authenticate/get_cached_tokens_use_case.dart';
+import 'package:app_template/domain/use_cases/authenticate/delete_auth_tokens_use_case.dart';
+import 'package:app_template/domain/use_cases/authenticate/refresh_tokens_use_case.dart';
+import 'package:app_template/domain/use_cases/authenticate/set_tokens_use_case.dart';
+import 'package:app_template/domain/use_cases/local_cache/is_first_app_start_use_case.dart';
 import 'package:app_template/presentation/screens/splash/bloc/splash_bloc.dart';
 import 'package:app_template/presentation/screens/developer_widgets/app_logger/bloc/app_logger_bloc.dart';
+import 'package:app_template/presentation/auth_controller/bloc/auth_controller_bloc.dart';
 
 /// The environment in which all used dependency instances are configured
 @immutable
@@ -101,19 +106,50 @@ class DepProvider extends InheritedWidget {
   T? mayBeGet<T>() => _env.mayBeGet<T>();
 
   // ---------------------------------------------------------------------------
-  AuthControllerBloc buildAuthControllerBloc() => AuthControllerBloc(
+  GetCachedTokensUseCase buildGetCachedTokensUseCase() =>
+      GetCachedTokensUseCase(
+        localCache: _env.g<ILocalCache>(),
+      );
+
+  // ---------------------------------------------------------------------------
+  DeleteAuthTokensUseCase buildDeleteAuthTokensUseCase() =>
+      DeleteAuthTokensUseCase(
+        localCache: _env.g<ILocalCache>(),
+      );
+
+  // ---------------------------------------------------------------------------
+  RefreshTokensUseCase buildRefreshTokensUseCase() => RefreshTokensUseCase(
+        apiFacade: _env.g<IApiFacade>(),
+      );
+
+  // ---------------------------------------------------------------------------
+  SetTokensUseCase buildSetTokensUseCase() => SetTokensUseCase(
+        apiFacade: _env.g<IApiFacade>(),
         authenticateRepository: _env.g<IAuthenticateRepository>(),
       );
 
   // ---------------------------------------------------------------------------
-  SplashBloc buildSplashBloc() => SplashBloc(
-        authenticateRepository: _env.g<IAuthenticateRepository>(),
+  IsFirstAppStartUseCase buildIsFirstAppStartUseCase() =>
+      IsFirstAppStartUseCase(
         localCache: _env.g<ILocalCache>(),
-        api: _env.g<IApiFacade>(),
+      );
+
+  // ---------------------------------------------------------------------------
+  SplashBloc buildSplashBloc() => SplashBloc(
+        getCachedTokensUseCase: _env.g<GetCachedTokensUseCase>(),
+        isFirstAppStartUseCase: _env.g<IsFirstAppStartUseCase>(),
+        refreshTokensUseCase: _env.g<RefreshTokensUseCase>(),
+        deleteAuthTokensUseCase: _env.g<DeleteAuthTokensUseCase>(),
+        setTokensUseCase: _env.g<SetTokensUseCase>(),
       );
 
   // ---------------------------------------------------------------------------
   AppLoggerBloc buildAppLoggerBloc() => AppLoggerBloc(
         errorLogger: _env.g<IErrorLogger>(),
+      );
+
+  // ---------------------------------------------------------------------------
+  AuthControllerBloc buildAuthControllerBloc() => AuthControllerBloc(
+        authenticateRepository: _env.g<IAuthenticateRepository>(),
       );
 }

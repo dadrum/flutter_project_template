@@ -1,8 +1,8 @@
 import 'dart:async';
 
+import '../../domain/entities/in_app_timer.dart';
+import '../../domain/repositories/i_timers_repository.dart';
 import '../interfaces/i_local_cache.dart';
-import '../interfaces/i_timers_repository.dart';
-import '../models/in_app_timer.dart';
 
 // -----------------------------------------------------------------------------
 /// repository for global timers

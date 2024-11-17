@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 
-import '../../../domain/environment/builders.dep_gen.dart';
+import '../../../core/environment/builders.dep_gen.dart';
+import '../../../core/navigation/top_route.dart';
 import '../../../l10n/locale_provider.dart';
-import '../../navigation/top_route.dart';
 import 'bloc/splash_bloc.dart';
 
 class SplashScreen extends StatelessWidget {
