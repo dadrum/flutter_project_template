@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 // ---------------------------------------------------------------------------
 // ---------------------------------------------------------------------------
@@ -10,6 +11,9 @@ class LocaleProvider extends StatefulWidget {
   }) : super(key: key);
 
   final Widget child;
+
+  static const List<Locale> supportedLocales =
+      AppLocalizations.supportedLocales;
 
   @override
   _LocaleProviderState createState() => _LocaleProviderState();
@@ -32,9 +36,11 @@ class _LocaleProviderState extends State<LocaleProvider> {
 
   // ---------------------------------------------------------------------------
   void setLocale(Locale locale) {
-    setState(() {
-      _locale = locale;
-    });
+    if (LocaleProvider.supportedLocales.contains(locale)) {
+      setState(() {
+        _locale = locale;
+      });
+    }
   }
 
   // ---------------------------------------------------------------------------
